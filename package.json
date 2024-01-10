@@ -21,6 +21,6 @@
     "vuetify": "3.0.1"
   },
   "devDependencies": {
-    "nuxt": "3.0.0"
+    "nuxt": "^3.9.1"
   }
 }
