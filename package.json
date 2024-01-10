@@ -18,7 +18,7 @@
     "@types/bcrypt": "^5.0.0",
     "@types/jquery": "^3.5.19",
     "@types/node": "^18",
-    "nuxt": "^3.7.4",
+    "nuxt": "^3.9.1",
     "nuxt-scheduler": "^0.0.16",
     "prisma": "^5.2.0",
     "prisma-erd-generator": "^1.6.2",
