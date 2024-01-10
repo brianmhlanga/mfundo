@@ -1,0 +1,275 @@
+
+generator client  {
+  provider = "prisma-client-js"
+}
+
+generator erd {
+  provider = "prisma-erd-generator"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+model User {
+  id                String         @id @default(cuid())
+  email              String         @unique
+  username           String         @unique
+  name               String?
+  title              String?      
+  surname            String?
+  phone              String?        @unique
+  age                Int?
+  gender             Gender     
+  profile            profile_type @default(HR_OFFICER)
+  password           String
+  salt               String
+  comments           Comments[]
+  my_requests        Requisition[] @relation("originator")
+  my_current_approvals          Requisition[] @relation("current_approver")
+  my_approvals       routingMembers[]
+  my_routing         routing? @relation("routing_owner")
+  current_logged_in_at   DateTime
+  last_logged_in_at      DateTime
+  account_status      status @default(INACTIVE)
+  created_at          DateTime       @default(now())
+  updated_at          DateTime @updatedAt
+
+  @@map("user")
+
+}
+enum profile_type {
+  HR_OFFICER
+  ADMIN
+  HR_MANAGER
+  HR_DIRECTOR
+  FINANCE
+  APPLICANT
+}
+ model routing {
+  id String @id @default(cuid())
+  members routingMembers[]
+  owner_id String @unique
+  routing_owner User @relation("routing_owner",fields: [owner_id],references: [id])
+ }
+ 
+ model Companies{
+  id   String @id @default(cuid())
+  company_name String
+  address     String?
+  bank_name  String?
+  account_number String?
+  created_at          DateTime       @default(now())
+  updated_at          DateTime @updatedAt
+ }
+ model routingMembers {
+  id String @id @default(cuid())
+  routing_id String 
+  route routing @relation(fields: [routing_id],references: [id])
+  user_id String
+  approver User @relation(fields: [user_id],references: [id])
+  position Int
+  created_at          DateTime       @default(now())
+  updated_at          DateTime @updatedAt
+ }
+ 
+ enum status {
+  ACTIVE
+  INACTIVE
+ }
+
+ enum Gender {
+  MALE
+  FEMALE
+ }
+ 
+ enum request_status {
+  DRAFT
+  MOVING
+  REJECTED
+  HISTORY
+  APPROVED_PENDING_PAYMENT
+  PAID
+ }
+model Applicant {
+  id                   String              @unique  @id @default(cuid())
+  portal_id            Int @unique  @default(autoincrement())
+  first_name           String?
+  last_name            String?
+  email                String? @unique
+  gender               Json?               
+  id_number            String?               
+  phone                String?
+  enthnicity           String?               
+  province             String?
+  city                 String?
+  nationality          Json?
+  availability         String?               
+  disability           String?              
+  employment_status    String?
+  expected_salary      Int?              
+  previous_convictions Json?              
+  date_of_birth        DateTime?
+  resume               String?
+  personal_strength    Json?               
+  technical_skills     Json?               
+  address              String?             @db.VarChar(1000)
+  profile            profile_type @default(APPLICANT)
+  password           String?
+  salt               String?
+  applications        Applications[]
+  current_logged_in_at   DateTime?
+  last_logged_in_at      DateTime?
+}
+
+model Applications {
+  id String @id @unique @default(cuid())
+  exam_status Boolean? @default(false)
+  postingId String?
+  applicantId String?
+  status Applications_status @default(Applied)
+  jobpostings          JobPostings? @relation(fields: [postingId], references: [id])
+  applicant            Applicant? @relation(fields: [applicantId],references: [id])
+}
+
+enum Applications_status {
+  Applied
+  BestFit
+  Moderate
+  NotFit
+  ShortList
+  Regret
+  Archive
+  InterviewOne
+  InterviewTwo
+  InterviewThree
+  InterviewFour
+  JobOffer
+  Employee
+}
+
+model JobPostings {
+  id                  String                @id @unique @default(cuid())
+  title               String?
+  description         String?                @db.VarChar(10000)
+  department          String?
+  hiring_manager      String?
+  deadline            DateTime?
+  job_type            JobPostings_job_type
+  experience          Int?
+  salary              Int?
+  location            String?                @default("HEAD OFFICE")
+  status              JobPostings_status    @default(OPEN)
+  views               Int?
+  exam_taken          Boolean?               @default(false)
+  questionaire        Questionaire[]
+  applications        Applications[]
+  questionaireanswers QuestionaireAnswers[]
+}
+
+
+enum JobPostings_status {
+  OPEN
+  CLOSED
+  DRAFT
+}
+
+enum JobPostings_job_type {
+  PERMANENT
+  FIXED_TERM_CONTRACT
+  PART_TIME
+}
+
+model Questionaire {
+  id                          String      @id @default(cuid())
+  postingId                   String
+  question_type               String
+  options                     Json?     
+  score                       Int?
+  created_at                  DateTime    @default(now())
+  created_by_name             String?
+  created_by_id               Int?
+  boolean_answer              Boolean?
+  multichoice_answer          String? 
+  applicant_id                String?
+  question                    String      @db.VarChar(10000)
+  student_boolean_answer      Boolean?
+  student_multichoice_answer  String?
+  student_unstructured_answer String?
+  correct                     Boolean?    @default(false)
+  jobpostings                 JobPostings @relation(fields: [postingId], references: [id], map: "Questionaire_postingId_fkey")
+
+  @@index([postingId], map: "Questionaire_postingId_fkey")
+}
+
+model QuestionaireAnswers {
+  id                          String
+  postingId                   String
+  question                    String      @db.VarChar(10000)
+  question_type               String
+  multichoice_answer          String?
+  boolean_answer              Boolean?
+  options                     Json?     
+  score                       Int?
+  student_boolean_answer      Boolean?
+  student_multichoice_answer  String?
+  student_unstructured_answer String?
+  correct                     Boolean?    @default(false)
+  created_at                  DateTime    @default(now())
+  created_by_name             String?
+  created_by_id               Int?
+  applicant_id                String?
+  id_primary                  String      @id @default(cuid())
+  jobpostings                 JobPostings @relation(fields: [postingId], references: [id], map: "QuestionaireAnswers_postingId_fkey")
+
+  @@index([postingId], map: "QuestionaireAnswers_postingId_fkey")
+}
+
+ model Requisition {
+  id  String @id @default(cuid())
+  requisition_number String
+  in_favour_of String
+  address String?
+  cheque_number String?
+  date DateTime?
+  cheque_amount Float
+  reason String?
+  attachments Json?
+  cheque_on String?
+  comments Comments[]
+  info Json
+  originator_id String
+  status request_status @default(MOVING)
+  current_approver_id  String
+  current_approver User @relation("current_approver",fields: [current_approver_id],references: [id])
+  originator User @relation("originator",fields: [originator_id],references: [id])
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+ }
+
+ model Attachments {
+  id  String @id @default(cuid())
+  attachment_name String
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+ }
+ model Comments {
+  id String @id @default(cuid())
+  requisition_id String
+  user_id String
+  comment String @db.LongText
+  request Requisition @relation(fields: [requisition_id],references: [id])
+  user User @relation(fields: [user_id],references: [id])
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt @default(now())
+  @@map("comments")
+}
+ model SageAPITokens {
+  id            Int      @id @default(autoincrement())
+  PeopleEssUser String   
+  XSRFTOKEN     String   
+  expiryDate    DateTime @default(now())
+  createdAt     DateTime @default(now())
+}
+
