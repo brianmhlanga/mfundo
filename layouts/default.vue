@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="/css/lineicons.css" />
     <link rel="stylesheet" href="/css/main.css" />
     <link rel="stylesheet" href="/css/primeblocks.css" />
+    <link rel="stylesheet" href="/css/prime.css" />
     <link rel="stylesheet" href="/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="/css/buttons.bootstrap4.min.css">
     <link rel="stylesheet" href="/css/keyTable.dataTables.min.css">

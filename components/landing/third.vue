@@ -38,79 +38,55 @@
             <i class="pi pi-arrow-right ml-3"></i>
         </a>
         </div>
-<div class="surface-section px-4 py-8 md:px-6 lg:px-8">
-  <div class="text-center text-900 text-5xl font-bold mb-5">Featured Exams</div>
-  <div class="grid grid-nogutter">
-    <div class="col-12 lg:col-3 p-3">
-      <div class="p-3 custom-shadow-2 border-round surface-card h-full">
-        <div class="flex justify-content-between text-500">
-          <span>Article</span>
-          <span class="inline-flex">
-            <i class="pi pi-clock mr-2"></i>
-            <span>12 min</span>
-          </span>
+        <div class="surface-section px-4 py-8 md:px-6 lg:px-8">
+        <div class="text-center text-900 text-5xl font-bold mb-5">Featured Exams</div>
+        <div class="grid nogutter">
+            <div class="col-12 lg:col-3 p-3">
+            <div class="custom-shadow-2 border-round h-full surface-card">
+            <img src="https://blocks.primevue.org/images/blocks/blog/blog-3.jpg" alt="Image" class="block w-full border-round-top">
+            <div class="p-4">
+                <span class="block font-medium text-orange-600 mb-3">Science</span>
+                <div class="text-xl text-900 font-medium mb-3 line-height-3">Biology G7</div>
+                <div class="line-height-3 mb-3 text-700 mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+                <Button class="p-button p-component w-full" label="Take Exam" icon="pi pi-map" />
+            </div>
+            </div>
         </div>
-        <p class="line-height-3 mt-3 mb-7 text-900 font-medium text-xl">It is time to step up and protect our world. Little actions will lead to huge differences.</p>
-        <div>
-          <span class="bg-blue-100 text-blue-600 font-medium py-1 px-3 mr-2" style="border-radius: 30px;">Environment</span>
-          <span class="bg-teal-100 text-teal-600 font-medium py-1 px-3" style="border-radius: 30px;">Climate</span>
+        <div class="col-12 lg:col-3 p-3">
+            <div class="custom-shadow-2 border-round h-full surface-card">
+            <img src="https://blocks.primevue.org/images/blocks/blog/blog-3.jpg" alt="Image" class="block w-full border-round-top">
+            <div class="p-4">
+                <span class="block font-medium text-orange-600 mb-3">Science</span>
+                <div class="text-xl text-900 font-medium mb-3 line-height-3">Biology G7</div>
+                <div class="line-height-3 mb-3 text-700 mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+                <Button class="p-button p-component w-full" label="Take Exam" icon="pi pi-map" />
+            </div>
+            </div>
         </div>
-        <img src="https://blocks.primevue.org/images/blocks/blog/blog-6.png" alt="Image" class="block w-full mt-5">
-      </div>
-    </div>
-    <div class="col-12 lg:col-3 p-3">
-      <div class="p-3 custom-shadow-2 border-round surface-card h-full">
-        <div class="flex justify-content-between text-500">
-          <span>Article</span>
-          <span class="inline-flex">
-            <i class="pi pi-clock mr-2"></i>
-            <span>9 min</span>
-          </span>
+        <div class="col-12 lg:col-3 p-3">
+            <div class="custom-shadow-2 border-round h-full surface-card">
+            <img src="https://blocks.primevue.org/images/blocks/blog/blog-3.jpg" alt="Image" class="block w-full border-round-top">
+            <div class="p-4">
+                <span class="block font-medium text-orange-600 mb-3">Science</span>
+                <div class="text-xl text-900 font-medium mb-3 line-height-3">Biology G7</div>
+                <div class="line-height-3 mb-3 text-700 mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+                <Button class="p-button p-component w-full" label="Take Exam" icon="pi pi-map" />
+            </div>
+            </div>
         </div>
-        <p class="line-height-3 mt-3 mb-7 text-900 font-medium text-xl">New sustainable energy alternatives and how we can utilize them efficiently.</p>
-        <div>
-          <span class="bg-blue-100 text-blue-600 font-medium py-1 px-3 mr-2" style="border-radius: 30px;">Environment</span>
-          <span class="bg-green-100 text-green-600 font-medium py-1 px-3" style="border-radius: 30px;">Energy</span>
+        <div class="col-12 lg:col-3 p-3">
+            <div class="custom-shadow-2 border-round h-full surface-card">
+            <img src="https://blocks.primevue.org/images/blocks/blog/blog-3.jpg" alt="Image" class="block w-full border-round-top">
+            <div class="p-4">
+                <span class="block font-medium text-orange-600 mb-3">Science</span>
+                <div class="text-xl text-900 font-medium mb-3 line-height-3">Biology G7</div>
+                <div class="line-height-3 mb-3 text-700 mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+                <Button class="p-button p-component w-full" label="Take Exam" icon="pi pi-map" />
+            </div>
+            </div>
         </div>
-        <img src="https://blocks.primevue.org/images/blocks/blog/blog-7.png" alt="Image" class="block w-full mt-5">
-      </div>
-    </div>
-    <div class="col-12 lg:col-3 p-3">
-      <div class="p-3 custom-shadow-2 border-round surface-card h-full">
-        <div class="flex justify-content-between text-500">
-          <span>Article</span>
-          <span class="inline-flex">
-            <i class="pi pi-clock mr-2"></i>
-            <span>5 min</span>
-          </span>
         </div>
-        <p class="line-height-3 mt-3 mb-7 text-900 font-medium text-xl">Upcoming technology is what we've been waiting for to shape our future.</p>
-        <div>
-          <span class="bg-purple-100 text-purple-600 font-medium py-1 px-3 mr-2" style="border-radius: 30px;">Tech</span>
-          <span class="bg-indigo-100 text-indigo-600 font-medium py-1 px-3" style="border-radius: 30px;">Opinion</span>
         </div>
-        <img src="https://blocks.primevue.org/images/blocks/blog/blog-8.png" alt="Image" class="block w-full mt-5">
-      </div>
-    </div>
-    <div class="col-12 lg:col-3 p-3">
-      <div class="p-3 custom-shadow-2 border-round surface-card h-full">
-        <div class="flex justify-content-between text-500">
-          <span>Article</span>
-          <span class="inline-flex">
-            <i class="pi pi-clock mr-2"></i>
-            <span>5 min</span>
-          </span>
-        </div>
-        <p class="line-height-3 mt-3 mb-7 text-900 font-medium text-xl">Upcoming technology is what we've been waiting for to shape our future.</p>
-        <div>
-          <span class="bg-purple-100 text-purple-600 font-medium py-1 px-3 mr-2" style="border-radius: 30px;">Tech</span>
-          <span class="bg-indigo-100 text-indigo-600 font-medium py-1 px-3" style="border-radius: 30px;">Opinion</span>
-        </div>
-        <img src="https://blocks.primevue.org/images/blocks/blog/blog-8.png" alt="Image" class="block w-full mt-5">
-      </div>
-    </div>
-  </div>
-</div>
     </div>
     </div>
 </template>
