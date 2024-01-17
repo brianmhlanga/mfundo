@@ -1,16 +1,12 @@
 import { prisma } from "~~/prisma/db";
-import nodemailer from "nodemailer";
-import * as dotenv from 'dotenv'
-import nuxtConfig from "~~/nuxt.config";
 import bcrypt from "bcrypt";
+import argon2 from "argon2";
 
 export default defineEventHandler(async (event)=>{
-    const response = {};
-    
-
-    const { email, username, name ,profile, surname,selected_center,selectedCommodities , phone, age, password, gender, title, accountTypes, account_status} = await readBody(event);
+    const response:any = {};
+    const { data: {first_name,last_name,date_of_birth,country,school,grade,email,phone,password}} = await readBody(event);
      
-    const isAlreadyRegistered = await prisma.user.findUnique({
+    const isAlreadyRegistered = await prisma.student.findUnique({
         where: {
             email: email
         }
@@ -18,44 +14,44 @@ export default defineEventHandler(async (event)=>{
 
     if(isAlreadyRegistered){
         return {
-            message: `User with ${email} already exists.`,
+            message: `Student with ${email} already exists.`,
             success: false
         }
     }
    
 
-    const salt = await bcrypt.genSalt();
-    const hash = await bcrypt.hash(password, salt);
-    try {
     
-        const createUser = await prisma.user.create({
+    try {
+        
+        let password2 = await argon2.hash(password);
+
+        if(argon2.needsRehash(password2)) password2 = await argon2.hash(password2);
+        const createStudent = await prisma.student.create({
             data: {
-                name: name,
-                surname: surname,
-                username: username,
-                phone: phone,
-                email: email,
-                profile: profile,
-                gender: gender,
-                password: hash,
-                account_status: account_status,
-                title: title,
-                age: age,
-                salt: salt,
-                current_logged_in_at: new Date(),
-                last_logged_in_at: new Date()
+                first_name,
+                last_name,
+                date_of_birth,
+                school,
+                grade,
+                email,
+                nationality: country,
+                phone,
+                profile: "STUDENT",
+                password: password2,
             }
         });
-        response['registred'] = createUser
+
+        response['registred'] = createStudent
         response['success'] = true
 
+
   
-      } catch (error) {
+      } catch (error:any) {
+
         response['success'] = false
         response['message'] = error.toString()
       };
     
-   
    
     return response;
 });
