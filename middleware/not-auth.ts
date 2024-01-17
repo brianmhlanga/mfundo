@@ -1,11 +1,14 @@
-import { useAuthStore } from "../stores/auth";
-
 export default defineNuxtRouteMiddleware (async (to, from) => {
-  const authStore = useAuthStore();
-  const isValid: any = await authStore.me();
+  console.log("inside not auth")
+  const token = useCookie('token').value || "";
+  console.log("tokkkkkkkkkkken",token)
+  const { data, success }: any = await $fetch('/auth/verify-token', {
+    method: "POST",
+    body: JSON.stringify({
+      token
+    })
+  })
+  console.log(data,success,"ndiro result")
 
-  if(isValid.success){
-    //Redirect to the home page 
-    navigateTo('/');
-  }
-});
+  if(success && data?.is_valid === true) return navigateTo('/')
+})
