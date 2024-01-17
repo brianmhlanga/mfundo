@@ -1,111 +1,82 @@
-git <template>
-    <NuxtLayout name="authentication">
+<template>
+    <NuxtLayout name="default">
         <div class="block-content">
-            <div class="surface-card shadow-2 border-round  lg:w-6 w-full lg:w-6 p-4 lg:p-7">
-                <div class="text-center mb-5"> <img src="/images/logo.png" alt="Image" height="50" class="mb-3">
-                    <div class="text-900 text-3xl font-medium mb-3">Oacey Recruitment System</div>
-                </div>
-                <div> <label for="email1" class="block text-900 font-medium mb-2">Email</label> 
-                    <input class="p-inputtext p-component w-full mb-3" id="email1" v-model="email" type="text" placeholder="Email address"> 
-                    <label for="password1" class="block text-900 font-medium mb-2">Password</label>
-                     <input class="p-inputtext p-component w-full mb-3" id="password1" type="password" v-model="password" placehoder="Password">
-                    <div class="flex align-items-center justify-content-between mb-6">
-                        <div class="flex align-items-center">
-                            <div class="p-checkbox p-component mr-2" id="rememberme1">
-                                <div class="p-hidden-accessible"> <input type="checkbox"> </div>
-                                <div class="p-checkbox-box">
-                                    <!---->
-                                </div>
-                            </div> <label for="rememberme1">Remember me</label>
-                        </div> <a class="font-medium no-underline ml-2 text-blue-500 text-right cursor-pointer">Forgot password?</a>
-                    </div> <button class="p-button p-component w-full" type="button" aria-label="Sign In" @click="login"> <span class="p-button-icon p-button-icon-left pi pi-user"></span> <span class="p-button-label">Sign In</span>
-                        <!----> <span class="p-ink" role="presentation" aria-hidden="true"></span>
-                    </button>
-                </div>
+        <div class="surface-ground px-4 py-8 md:px-6 lg:px-8 flex align-items-center justify-content-center">
+            <div class="surface-card p-4 shadow-2 border-round w-full lg:w-6">
+            <div class="text-center mb-5">
+                <img src="/images/blocks/logos/hyper.svg" alt="Image" height="50" class="mb-3">
+                <div class="text-900 text-3xl font-medium mb-3">Welcome Back</div>
+                <span class="text-600 font-medium line-height-3">Don't have an account?</span>
+                <a class="font-medium no-underline ml-2 text-blue-500 cursor-pointer">Create today!</a>
             </div>
-            <!---->
+            <div>
+                <label for="email1" class="block text-900 font-medium mb-2">Email</label>
+                <input v-model="email" class="p-inputtext p-component w-full mb-3" data-pc-name="inputtext" data-pc-section="root" id="email1" type="text" placeholder="Email address">
+                <label for="password1" class="block text-900 font-medium mb-2">Password</label>
+                <input v-model="password" class="p-inputtext p-component w-full mb-3" data-pc-name="inputtext" data-pc-section="root" id="password1" type="password" placehoder="Password">
+                <div class="flex align-items-center justify-content-between mb-6">
+              
+                <a class="font-medium no-underline ml-2 text-blue-500 text-right cursor-pointer">Forgot password?</a>
+                </div>
+                <button @click="signIn" class="p-button p-component w-full" type="button" aria-label="Sign In" data-pc-name="button" data-pc-section="root" data-pd-ripple="true">
+                <span class="p-button-icon p-button-icon-left pi pi-user" data-pc-section="icon"></span>
+                <span class="p-button-label" data-pc-section="label">Sign In</span>
+                <!---->
+                <span role="presentation" aria-hidden="true" data-p-ink="true" data-p-ink-active="false" class="p-ink" data-pc-name="ripple" data-pc-section="root"></span>
+                </button>
+            </div>
+            </div>
+        </div>
+        <!---->
         </div>
     </NuxtLayout>
 </template>
-
-<script setup lang="ts">
-    import { useToast } from "primevue/usetoast";
-    import { storeToRefs } from "pinia";
-    import { useAuthStore } from "~/stores/auth";
-
-    definePageMeta({
+<script lang="ts" setup>
+import { storeToRefs } from "pinia";
+import { useToast } from "primevue/usetoast";
+import { useAuthStore } from "~/stores/auth";
+const authStore = useAuthStore()
+const toast = useToast()
+const email = ref()
+const password = ref()
+definePageMeta({
         middleware: ["not-auth"]
-    });
+});
 
-    const toast = useToast();
-    const authStore = useAuthStore()
-    const email = storeToRefs(authStore).login_email
-    const password = storeToRefs(authStore).login_password
-    // const employeeData = storeToRefs(authStore).employeeData
-    // const employee_id = storeToRefs(authStore).employee_id
-    const isLoading = ref(false);
-
-    const goToRegister = async () => {
-
-        navigateTo('/register')
-        
+const signIn = async () => {
+    let data = {
+       email: email.value,
+       password: password.value
     }
-
-    const login = async ()=>{
-        //Load animation
-        isLoading.value = true;
-        let result = await authStore.login()
-            console.log("result rangu iri")
-            console.log(result)
-
-            //On login success
-            if(result.data.success){
-                //Get JWT token
-                const token = result.data.token;
-                navigateTo('/')
-                // window.location.href = "/";
-            }else {
-                isLoading.value = false;
-                toast.add({severity:'warn', summary: 'Warning Message', detail: result.data.message, life: 6000});
-            }
-        
-    }
-</script>
-
-<style>
-    .content-wrapper.d-flex.align-items-center.auth.px-0 {
-        /* background-color: red; */
-        background-position: bottom;
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-image: url(/images/signin-2.jpg);
-    }
-    .auth .brand-logo {
-        margin-bottom: 2rem;
-        text-align: center;
-    }
-    .auth .auth-form-light {
-        background: #ffffff9c !important;
-    }
-    button.p-button.p-component.p-disabled.p-button-loading.p-button-loading-label-only.bg-secondary.btn.btn-bg.text-white {
-        width: 100% !important;
-        height: 70px !important;
-    }
-    .w-full.lg\:w-6.p-4.lg\:p-7.surface-card {
-    margin: auto;
-    }
-    input.p-inputtext.p-component.w-full.mb-4 {
-    height: 70px;
+    let result = await authStore.login(data).then((data) => {
+        console.log(data)
+        if (data?.data?.success) {
+            toast.add({severity:'info', summary: 'Success', detail: "Succesfully Login", life: 6000});
+            navigateTo('/')
+        }
+        else {
+                toast.add({severity:'warn', summary: 'Registration failed', detail: "Failed to Register", life: 6000});
+        }
+    })
 }
-    button.p-button.p-component.bg-primary.btn.btn-bg.text-white {
-        height: 70px !important;
-    }
-    button.p-button.p-component.bg-primary.btn.btn-bg.text-white {
-        width: 100%;
-        height: 50px;
-        background-color: #141414 !important;
-    }
-    button.p-button.p-component.w-full {
-    background-color: black;
-    }
+</script>
+<style>
+.surface-section.w-full.md\:w-6.p-6.md\:p-8 {
+    height: 100vh;
+}
+.p-input-icon-right > .p-inputtext {
+    padding-right: 2.5rem;
+    width: 100%;
+    height: 50px;
+}
+.p-input-icon-right > .p-inputtext {
+    padding-right: 2.5rem;
+    width: 515px;
+}
+input.p-inputtext.p-component {
+    width: 100% !important;
+}
+.p-input-icon-right > .p-inputtext {
+    padding-right: 218px !important;
+}
 </style>
