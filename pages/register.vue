@@ -13,17 +13,17 @@
                     <div class="flex">
                         <div class="col-6 mb-3">
                         <label for="firstName" class="block text-900 font-medium mb-2">First Name</label>
-                        <input class="p-inputtext p-component w-full" data-pc-name="inputtext" data-pc-section="root" id="firstName" type="text" placeholder="First Name">
+                        <input v-model="first_name" class="p-inputtext p-component w-full" data-pc-name="inputtext" data-pc-section="root" id="firstName" type="text" placeholder="First Name">
                         </div>
                         <div class="col-6 mb-3">
                         <label for="lastName" class="block text-900 font-medium mb-2">Last Name</label>
-                        <input class="p-inputtext p-component w-full" data-pc-name="inputtext" data-pc-section="root" id="lastName" type="text" placeholder="Last Name">
+                        <input v-model="last_name" class="p-inputtext p-component w-full" data-pc-name="inputtext" data-pc-section="root" id="lastName" type="text" placeholder="Last Name">
                         </div>
                     </div>
                     <div class="flex">
                         <div class="col-6 mb-3">
                         <label for="firstName" class="block text-900 font-medium mb-2">Date of Birth</label>
-                        <Calendar class="mydate" showIcon iconDisplay="input" />
+                        <Calendar v-model="date_of_birth" class="mydate" showIcon iconDisplay="input" />
                         </div>
                         <div class="col-6 mb-3">
                         <label for="lastName" class="block text-900 font-medium mb-2">Country</label>
@@ -49,39 +49,38 @@
                     <div class="flex">
                         <div class="col-6 mb-3">
                         <label for="firstName" class="block text-900 font-medium mb-2">School/Institution Name</label>
-                        <input class="p-inputtext p-component w-full" data-pc-name="inputtext" data-pc-section="root" id="firstName" type="number" placeholder="School/Institution Name">
+                        <input v-model="school" class="p-inputtext p-component w-full" data-pc-name="inputtext" data-pc-section="root"  type="text" placeholder="School/Institution Name">
                         </div>
                         <div class="col-6 mb-3">
                         <label for="lastName" class="block text-900 font-medium mb-2">Grade/Class</label>
-                        <input class="p-inputtext p-component w-full" data-pc-name="inputtext" data-pc-section="root" id="lastName" type="text" placeholder="Last Name">
+                        <input v-model="grade" class="p-inputtext p-component w-full" data-pc-name="inputtext" data-pc-section="root"  type="text" placeholder="Grade/Class">
                         </div>
                     </div>
                     <div class="flex">
                         <div class="col-6 mb-3">
                         <label for="firstName" class="block text-900 font-medium mb-2">Email</label>
-                        <input class="p-inputtext p-component w-full" data-pc-name="inputtext" data-pc-section="root" id="firstName" type="email" placeholder="Email Address">
+                        <input v-model="email" class="p-inputtext p-component w-full" data-pc-name="inputtext" data-pc-section="root"  type="email" placeholder="Email Address">
                         </div>
                         <div class="col-6 mb-3">
                         <label for="lastName" class="block text-900 font-medium mb-2">Phone Number</label>
-                        <input class="p-inputtext p-component w-full" data-pc-name="inputtext" data-pc-section="root" id="lastName" type="text" placeholder="Phone Number">
+                        <input v-model="phone" class="p-inputtext p-component w-full" data-pc-name="inputtext" data-pc-section="root"  type="text" placeholder="Phone Number">
                         </div>
                         
                     </div>
                     <div class="flex">
                         <div class="col-6 mb-3">
                         <label for="lastName" class="block text-900 font-medium mb-2">Password</label>
-                        <input class="p-inputtext p-component w-full" data-pc-name="inputtext" data-pc-section="root" id="lastName" type="password" placeholder="Password">
+                        <input v-model="password" class="p-inputtext p-component w-full" data-pc-name="inputtext" data-pc-section="root" id="lastName" type="password" placeholder="Password">
                         </div>
                         <div class="col-6 mb-3">
                         <label for="lastName" class="block text-900 font-medium mb-2">Confirm Password</label>
-                        <input class="p-inputtext p-component w-full" data-pc-name="inputtext" data-pc-section="root" id="lastName" type="text" placeholder="Phone Number">
+                        <input v-model="confirm_password" class="p-inputtext p-component w-full" data-pc-name="inputtext" data-pc-section="root" id="lastName" type="text" placeholder="Phone Number">
                         </div>
                     </div>
                     
-                    <button class="p-button p-component w-full p-3" type="button" aria-label="Sign In" data-pc-name="button" data-pc-section="root" data-pd-ripple="true">
+                    <button @click="signUp" class="p-button p-component w-full p-3" type="button" aria-label="Sign In" data-pc-name="button" data-pc-section="root" data-pd-ripple="true">
                         <span class="p-button-icon p-button-icon-left pi pi-user" data-pc-section="icon"></span>
                         <span class="p-button-label" data-pc-section="label">Sign Up</span>
-                        <!---->
                         <span role="presentation" aria-hidden="true" data-p-ink="true" data-p-ink-active="false" class="p-ink" data-pc-name="ripple" data-pc-section="root"></span>
                     </button>
                 </div>
@@ -93,12 +92,51 @@
     </NuxtLayout>
 </template>
 <script lang="ts" setup>
+import { storeToRefs } from "pinia";
+import { useToast } from "primevue/usetoast";
+import { useAuthStore } from "~/stores/auth";
+const authStore = useAuthStore()
+const toast = useToast()
 import countriesData from '~/json/countries.json';
 const selectedCountry = ref();
+const first_name = ref()
+const last_name = ref()
+const date_of_birth = ref()
+const school = ref()
+const grade = ref()
+const email = ref()
+const phone = ref()
+const password = ref()
+const confirm_password = ref()
 const countries = ref([]);
 onMounted(() => {
   countries.value = countriesData;
 });
+
+const signUp = async () => {
+    let data = {
+       first_name: first_name.value,
+       last_name: last_name.value,
+       date_of_birth: date_of_birth.value,
+       country: selectedCountry.value,
+       school: school.value,
+       grade: grade.value,
+       email: email.value,
+       phone: phone.value,
+       password: password.value,
+       confirm_password: confirm_password
+    }
+    let result = await authStore.register(data).then((data) => {
+        console.log(data)
+        if (data?.data?.success) {
+            toast.add({severity:'info', summary: 'Success', detail: "Succesfully Registred", life: 6000});
+            navigateTo('/login')
+        }
+        else {
+                toast.add({severity:'warn', summary: 'Registration failed', detail: "Failed to Register", life: 6000});
+        }
+    })
+}
 </script>
 <style>
 .surface-section.w-full.md\:w-6.p-6.md\:p-8 {
@@ -117,6 +155,6 @@ input.p-inputtext.p-component {
     width: 100% !important;
 }
 .p-input-icon-right > .p-inputtext {
-    padding-right: 35.5rem !important;
+    padding-right: 218px !important;
 }
 </style>
