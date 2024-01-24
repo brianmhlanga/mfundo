@@ -1,175 +1,56 @@
 <template>
     <NuxtLayout name="dashboard">
-        <section class="section">
-          <div class="container-fluid pt-5">
-              <div  class="row">
-                <div class="grid">
-                <div class="col-12 lg:col-4 p-2">
-                    <div class="shadow-2 surface-card border-round p-4 h-full">
-                    <div class="flex align-items-start">
-                        <div class="bg-blue-100 border-round inline-flex align-items-center justify-content-center" style="width: 52px; height: 52px;">
-                        <img src="https://blocks.primevue.org/images/blocks/illustration/stats-illustration-1.svg" width="38" height="38">
-                        </div>
-                        <div class="ml-3 flex-1">
-                        <span class="block text-900 mb-1 text-xl font-medium">Applicants</span>
-                        <p class="text-600 mt-0 mb-5 text-sm"></p>
-                        <div class="flex align-items-center justify-content-between">
-                            <span class="text-700">Total</span>
-                            <span class="font-bold text-700">{{applicants}}</span>
-                        </div>
-                        <ul class="list-none p-0 m-0 flex align-content-center mt-2 gap-2">
-                            <li class="flex-1 bg-blue-500" style="height: 7px; border-radius: 3px;"></li>
-                            <li class="flex-1 bg-blue-500" style="height: 7px; border-radius: 3px;"></li>
-                            <li class="flex-1 bg-blue-500" style="height: 7px; border-radius: 3px;"></li>
-                            <li class="flex-1 bg-blue-500" style="height: 7px; border-radius: 3px;"></li>
-                            <li class="flex-1 bg-blue-500" style="height: 7px; border-radius: 3px;"></li>
-                        </ul>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-                <div class="col-12 lg:col-4 p-2">
-                    <div class="shadow-2 surface-card border-round p-4 h-full">
-                    <div class="flex align-items-start">
-                        <div class="bg-blue-100 border-round inline-flex align-items-center justify-content-center" style="width: 52px; height: 52px;">
-                        <img src="https://blocks.primevue.org/images/blocks/illustration/stats-illustration-2.svg" width="38" height="38">
-                        </div>
-                        <div class="ml-3 flex-1">
-                        <span class="block text-900 mb-1 text-xl font-medium">Current Openings</span>
-                        <div class="flex align-items-center justify-content-between">
-                            <span class="text-700">Total</span>
-                            <span class="font-bold text-700">{{ current_openings }}</span>
-                        </div>
-                        <ul class="list-none p-0 m-0 flex align-content-center mt-2 gap-2">
-                            <li class="flex-1 bg-orange-500" style="height: 7px; border-radius: 3px;"></li>
-                            <li class="flex-1 bg-orange-500" style="height: 7px; border-radius: 3px;"></li>
-                            <li class="flex-1 bg-orange-500" style="height: 7px; border-radius: 3px;"></li>
-                            <li class="flex-1 bg-orange-500" style="height: 7px; border-radius: 3px;"></li>
-                            <li class="flex-1 bg-orange-500" style="height: 7px; border-radius: 3px;"></li>
-                        </ul>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-                <div class="col-12 lg:col-4 p-2">
-                    <div class="shadow-2 surface-card border-round p-4 h-full">
-                    <div class="flex align-items-start">
-                        <div class="bg-blue-100 border-round inline-flex align-items-center justify-content-center" style="width: 52px; height: 52px;">
-                        <img src="https://blocks.primevue.org/images/blocks/illustration/stats-illustration-3.svg" width="38" height="38">
-                        </div>
-                        <div class="ml-3 flex-1">
-                        <span class="block text-900 mb-1 text-xl font-medium">Active Offers</span>
-                        <div class="flex align-items-center justify-content-between">
-                            <span class="text-700">Total</span>
-                            <span class="font-bold text-700">12</span>
-                        </div>
-                        <ul class="list-none p-0 m-0 flex align-content-center mt-2 gap-2">
-                            <li class="flex-1 bg-purple-500" style="height: 7px; border-radius: 3px;"></li>
-                            <li class="flex-1 bg-purple-500" style="height: 7px; border-radius: 3px;"></li>
-                            <li class="flex-1 bg-purple-500" style="height: 7px; border-radius: 3px;"></li>
-                            <li class="flex-1 bg-purple-500" style="height: 7px; border-radius: 3px;"></li>
-                            <li class="flex-1 bg-purple-500" style="height: 7px; border-radius: 3px;"></li>
-                        </ul>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-                <div class="col-12 lg:col-4 p-2">
-                    <div class="shadow-2 surface-card border-round p-4 h-full">
-                    <div class="flex align-items-start">
-                        <div class="bg-blue-100 border-round inline-flex align-items-center justify-content-center" style="width: 52px; height: 52px;">
-                        <img src="https://blocks.primevue.org/images/blocks/illustration/stats-illustration-3.svg" width="38" height="38">
-                        </div>
-                        <div class="ml-3 flex-1">
-                        <span class="block text-900 mb-1 text-xl font-medium">Closed Openings</span>
-                        <div class="flex align-items-center justify-content-between">
-                            <span class="text-700">Total</span>
-                            <span class="font-bold text-700">{{ closed_openings }}</span>
-                        </div>
-                        <ul class="list-none p-0 m-0 flex align-content-center mt-2 gap-2">
-                            <li class="flex-1 bg-purple-500" style="height: 7px; border-radius: 3px;"></li>
-                            <li class="flex-1 bg-purple-500" style="height: 7px; border-radius: 3px;"></li>
-                            <li class="flex-1 bg-purple-500" style="height: 7px; border-radius: 3px;"></li>
-                            <li class="flex-1 bg-purple-500" style="height: 7px; border-radius: 3px;"></li>
-                            <li class="flex-1 bg-purple-500" style="height: 7px; border-radius: 3px;"></li>
-                        </ul>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-                <div class="col-12 lg:col-4 p-2">
-                    <div class="shadow-2 surface-card border-round p-4 h-full">
-                    <div class="flex align-items-start">
-                        <div class="bg-blue-100 border-round inline-flex align-items-center justify-content-center" style="width: 52px; height: 52px;">
-                        <img src="https://blocks.primevue.org/images/blocks/illustration/stats-illustration-3.svg" width="38" height="38">
-                        </div>
-                        <div class="ml-3 flex-1">
-                        <span class="block text-900 mb-1 text-xl font-medium">Total Openings</span>
-                        <div class="flex align-items-center justify-content-between">
-                            <span class="text-700">Total</span>
-                            <span class="font-bold text-700">{{total_openings}}</span>
-                        </div>
-                        <ul class="list-none p-0 m-0 flex align-content-center mt-2 gap-2">
-                            <li class="flex-1 bg-purple-500" style="height: 7px; border-radius: 3px;"></li>
-                            <li class="flex-1 bg-purple-500" style="height: 7px; border-radius: 3px;"></li>
-                            <li class="flex-1 bg-purple-500" style="height: 7px; border-radius: 3px;"></li>
-                            <li class="flex-1 bg-purple-500" style="height: 7px; border-radius: 3px;"></li>
-                            <li class="flex-1 bg-purple-500" style="height: 7px; border-radius: 3px;"></li>
-                        </ul>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-                <div class="col-12 lg:col-4 p-2">
-                    <div class="shadow-2 surface-card border-round p-4 h-full">
-                    <div class="flex align-items-start">
-                        <div class="bg-blue-100 border-round inline-flex align-items-center justify-content-center" style="width: 52px; height: 52px;">
-                        <img src="https://blocks.primevue.org/images/blocks/illustration/stats-illustration-3.svg" width="38" height="38">
-                        </div>
-                        <div class="ml-3 flex-1">
-                        <span class="block text-900 mb-1 text-xl font-medium">Succesful Applicants</span>
-                        <div class="flex align-items-center justify-content-between">
-                            <span class="text-700">Total</span>
-                            <span class="font-bold text-700">{{successful_applications}}</span>
-                        </div>
-                        <ul class="list-none p-0 m-0 flex align-content-center mt-2 gap-2">
-                            <li class="flex-1 bg-purple-500" style="height: 7px; border-radius: 3px;"></li>
-                            <li class="flex-1 bg-purple-500" style="height: 7px; border-radius: 3px;"></li>
-                            <li class="flex-1 bg-purple-500" style="height: 7px; border-radius: 3px;"></li>
-                            <li class="flex-1 bg-purple-500" style="height: 7px; border-radius: 3px;"></li>
-                            <li class="flex-1 bg-purple-500" style="height: 7px; border-radius: 3px;"></li>
-                        </ul>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-                <div class="col-12 lg:col-4 p-2">
-                    <div class="shadow-2 surface-card border-round p-4 h-full">
-                    <div class="flex align-items-start">
-                        <div class="bg-blue-100 border-round inline-flex align-items-center justify-content-center" style="width: 52px; height: 52px;">
-                        <img src="https://blocks.primevue.org/images/blocks/illustration/stats-illustration-3.svg" width="38" height="38">
-                        </div>
-                        <div class="ml-3 flex-1">
-                        <span class="block text-900 mb-1 text-xl font-medium">Rejected Applicants</span>
-                        <div class="flex align-items-center justify-content-between">
-                            <span class="text-700">Total</span>
-                            <span class="font-bold text-700">{{rejected_applications}}</span>
-                        </div>
-                        <ul class="list-none p-0 m-0 flex align-content-center mt-2 gap-2">
-                            <li class="flex-1 bg-purple-500" style="height: 7px; border-radius: 3px;"></li>
-                            <li class="flex-1 bg-purple-500" style="height: 7px; border-radius: 3px;"></li>
-                            <li class="flex-1 bg-purple-500" style="height: 7px; border-radius: 3px;"></li>
-                            <li class="flex-1 bg-purple-500" style="height: 7px; border-radius: 3px;"></li>
-                            <li class="flex-1 bg-purple-500" style="height: 7px; border-radius: 3px;"></li>
-                        </ul>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-                </div>
-              </div>
-          </div>
-        </section>
+        <div class="grid">
+  <div class="col-12 md:col-6 lg:col-3">
+    <div class="surface-card shadow-2 border-round">
+      <div class="p-3 flex align-items-start">
+        <img src="/images/student.png" class="mr-2" style="width: 32px; height: 32px;">
+        <div>
+          <span class="text-700">Students</span>
+        </div>
+        <div class="p-2 bg-indigo-50 text-indigo-500 border-round ml-auto">23</div>
+      </div>
+      <img src="/images/students.svg" class="w-11 topart">
+    </div>
+  </div>
+  <div class="col-12 md:col-6 lg:col-3">
+    <div class="surface-card shadow-2 border-round">
+      <div class="p-3 flex align-items-start">
+        <img src="/images/examss.png" class="mr-2" style="width: 32px; height: 32px;">
+        <div>
+          <span class="text-700">Exams</span>
+          
+        </div>
+        <div class="p-2 bg-indigo-50 text-indigo-500 border-round ml-auto">25</div>
+      </div>
+      <img src="/images/exams.svg" class="w-11 topart2">
+    </div>
+  </div>
+  <div class="col-12 md:col-6 lg:col-3">
+    <div class="surface-card shadow-2 border-round">
+      <div class="p-3 flex align-items-start">
+        <img src="/images/coursess.png" class="mr-2" style="width: 32px; height: 32px;">
+        <div>
+          <span class="text-700">Subjects</span>
+        </div>
+        <div class="p-2 bg-indigo-50 text-indigo-500 border-round ml-auto">59</div>
+      </div>
+      <img src="/images/subjects.svg" class="w-11 topart3">
+    </div>
+  </div>
+  <div class="col-12 md:col-6 lg:col-3">
+    <div class="surface-card shadow-2 border-round">
+      <div class="p-3 flex align-items-start">
+        <img src="/images/new.png" class="mr-2" style="width: 32px; height: 32px;">
+        <div>
+          <span class="text-700">New Registrations</span>
+        </div>
+        <div class="p-2 bg-indigo-50 text-indigo-500 border-round ml-auto">233</div>
+      </div>
+      <img src="/images/new.svg" class="w-11 topart4">
+    </div>
+  </div>
+</div>
     </NuxtLayout>
   </template>
   
@@ -191,9 +72,9 @@
     const total_openings = ref()
     const rejected_applications = ref()
     const successful_applications = ref()
-    definePageMeta({ 
-        middleware: ["auth"]
-    });
+    // definePageMeta({ 
+    //     middleware: ["auth"]
+    // });
 
     const formatCurrency = (value) => {
 
@@ -222,100 +103,16 @@
   </script>
   
   <style>
-    .card-style {
-    background: #fff;
-    box-sizing: border-box;
-    padding: 25px 30px;
-    height: 100%;
-    position: relative;
-    border: 1px solid #fff;
-    box-shadow: 0px 10px 20px rgb(200 208 216 / 0%);
-    border-radius: 10px;
-    }
-    .row.dashtop {
-    margin-bottom: 30px;
-    }
-    .c-dashboardInfo {
-    margin-bottom: 15px;
-    }
-    .c-dashboardInfo .wrap {
-      background: #ffffff;
-      box-shadow: 2px 10px 20px rgb(0 0 0 / 10%);
-      border-radius: 5px;
-      text-align: center;
-      position: relative;
-      border: solid 1px white;
-      border-color: red solid 2px;
-      overflow: hidden;
-      padding: 40px 25px 20px;
-      height: 100%;
-  }
-    .c-dashboardInfo__title,
-    .c-dashboardInfo__subInfo {
-    color: #6c6c6c;
-    font-size: 1.18em;
-    }
-    .c-dashboardInfo span {
-    display: block;
-    }
-    .c-dashboardInfo__count {
-    font-weight: 600;
-    font-size: 2.5em;
-    line-height: 64px;
-    color: #323c43;
-    }
-    .c-dashboardInfo .wrap:after {
-      display: block;
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 15px;
-      content: "";
-  }
-  .loader{
-    position: fixed;
-    left: 0px;
-    top: 0px;
-    width: 100%;
-    height: 100%;
-    z-index: 9999;
-   }
-  
-    .c-dashboardInfo:nth-child(1) .wrap:after {
-      background: linear-gradient(82.59deg, #6477c6 0%, #4a6cf7 100%);
-    }
-    .c-dashboardInfo:nth-child(2) .wrap:after {
-      background: linear-gradient(82.59deg, #6477c6 0%, #4a6cf7 100%);
-    }
-    .c-dashboardInfo:nth-child(3) .wrap:after {
-      background: linear-gradient(82.59deg, #6477c6 0%, #4a6cf7 100%);
-    }
-    .c-dashboardInfo:nth-child(4) .wrap:after {
-      background: linear-gradient(82.59deg, #6477c6 0%, #4a6cf7 100%);
-    }
-    .c-dashboardInfo:nth-child(5) .wrap:after {
-      background: linear-gradient(82.59deg, #6477c6 0%, #4a6cf7 100%);
-    }
-    .c-dashboardInfo__title svg {
-    color: #d7d7d7;
-    margin-left: 5px;
-    }
-    .MuiSvgIcon-root-19 {
-    fill: currentColor;
-    width: 1em;
-    height: 1em;
-    display: inline-block;
-    font-size: 24px;
-    transition: fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-    user-select: none;
-    flex-shrink: 0;
-    }
-   .icon-card{
-    width: 110%;
-  } 
-  .dashboard{
-    margin-right: 20px;
-  }
-  
+img.topart {
+    margin: 11px;
+}
+img.w-11.topart2 {
+    height: 137px;
+}
+img.w-11.topart3 {
+    height: 137px;
+}
+img.w-11.topart4 {
+    height: 136px;
+} 
   </style>
