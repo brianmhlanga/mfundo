@@ -22,6 +22,12 @@
                   <span class="font-medium inline text-base lg:text-xs lg:block">Subjects</span>
                  </a>
               </li>
+              <li @click="navigateTo('/admin/examCreation')">
+                <a class="flex flex-row lg:flex-column align-items-center cursor-pointer p-3 lg:justify-content-center text-600 border-left-2 border-transparent hover:border-300 transition-duration-150 transition-colors p-ripple" data-pd-ripple="true">
+                  <i class="pi pi-pencil mr-2 lg:mr-0 mb-0 lg:mb-2 text-base lg:text-2xl"></i>
+                  <span class="font-medium inline text-base lg:text-xs lg:block">Exams</span>
+                 </a>
+              </li>
               <li>
                 <a class="flex flex-row lg:flex-column align-items-center cursor-pointer p-3 lg:justify-content-center text-600 border-left-2 border-transparent hover:border-300 transition-duration-150 transition-colors p-ripple" data-pd-ripple="true">
                   <i class="pi pi-users mr-2 lg:mr-0 mb-0 lg:mb-2 text-base lg:text-2xl"></i>
@@ -143,6 +149,7 @@
             </li>
           </ul>
         </div>
+        
         <div class="p-5 flex flex-column flex-auto">
           <slot />
           
@@ -153,3 +160,11 @@
   <!---->
 </div>
 </template>
+<style>
+  .p-5.flex.flex-column.flex-auto {
+    height: 300px;
+    overflow-y: scroll;
+    /* border: 1px solid #ccc; */
+    padding: 10px;
+  }
+</style>

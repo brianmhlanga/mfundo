@@ -4,14 +4,14 @@ import { prisma } from "~~/prisma/db";
 
 export default defineEventHandler(async (event)=>{
     const response = {};
-    const {id} = await readBody(event);
+
     try {
-        const budget = await prisma.budget.findUnique({
-          where: {
-            cost_id: id
-          }
+
+        const subjects = await prisma.subject.findMany({
+
         });
-        response['budget'] = budget
+  
+        response['subjects'] = subjects
         response['success'] = true
   
       } catch (error) {
@@ -20,4 +20,5 @@ export default defineEventHandler(async (event)=>{
       };
    
     return response;
+    
 });

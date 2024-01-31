@@ -88,8 +88,6 @@ model Subject {
   name              String?
   description         String?                @db.VarChar(10000)
   status              Subject_status    @default(OPEN)
-  views               Int?
-  exam_taken          Boolean?               @default(false)
   questionaire        Questionaire[]
   applications        Applications[]
   questionaireanswers QuestionaireAnswers[]
@@ -101,9 +99,17 @@ enum Subject_status {
   CLOSED
   DRAFT
 }
+model Exam {
+  id String @id @default(cuid())
+  exam_name String
+  questions Questionaire[]
+  created_at          DateTime       @default(now())
+  updated_at          DateTime @updatedAt
+
+}
 model Questionaire {
   id                          String      @id @default(cuid())
-  postingId                   String
+  postingId                   String?
   question_type               String
   options                     Json?     
   score                       Int?
@@ -117,8 +123,10 @@ model Questionaire {
   student_boolean_answer      Boolean?
   student_multichoice_answer  String?
   student_unstructured_answer String?
+  exam_id String
+  exam Exam     @relation(fields: [exam_id],references: [id])
   correct                     Boolean?    @default(false)
-  subject                 Subject @relation(fields: [postingId], references: [id], map: "Questionaire_postingId_fkey")
+  subject                 Subject? @relation(fields: [postingId], references: [id], map: "Questionaire_postingId_fkey")
 
   @@index([postingId], map: "Questionaire_postingId_fkey")
 }

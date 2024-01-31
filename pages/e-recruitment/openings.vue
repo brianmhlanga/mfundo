@@ -281,7 +281,7 @@
                         </div> 
 
                     </template>
-                </OrderList>
+            </OrderList>
             <div  v-else-if="is_editing === true" class="row">
             <div class="col-12 md:col-4">
             <div class="p-inputgroup">
@@ -347,10 +347,8 @@
     import { useAuthStore } from "~/stores/auth";
     import { useAdminStore } from "~/stores/admin";
     import { useConfirm } from "primevue/useconfirm";
-    import { useSageStore } from "~/stores/sage";
     import { useRecruitmentStore } from "~/stores/recruitment";
     const confirm = useConfirm();
-    const sageStore = useSageStore()
     const authStore = useAuthStore()
     const recruitmentStore = useRecruitmentStore()
     const adminStore = useAdminStore()

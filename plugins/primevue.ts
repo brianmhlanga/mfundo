@@ -25,6 +25,8 @@ import Fieldset from 'primevue/fieldset';
 import ScrollTop from 'primevue/scrolltop';
 import ScrollPanel from 'primevue/scrollpanel';
 import Editor from 'primevue/editor';
+import InputGroup from 'primevue/inputgroup';
+import InputGroupAddon from 'primevue/inputgroupaddon';
 import Chips from 'primevue/chips';
 import Dialog from 'primevue/dialog';
 import SelectButton from 'primevue/selectbutton';
@@ -68,8 +70,10 @@ import ColorPicker from 'primevue/colorpicker';
 export default defineNuxtPlugin((nuxtApp) => {
     nuxtApp.vueApp.use(PrimeVue, {ripple: true});
     nuxtApp.vueApp.use(ToastService);
-    
+    // nuxtApp.vueApp.use(Quill)
     nuxtApp.vueApp.use(ConfirmationService);
+    nuxtApp.vueApp.component('InputGroup',InputGroup)
+    nuxtApp.vueApp.component('InputGroupAddon', InputGroupAddon)
     nuxtApp.vueApp.component('ProgressSpinner',ProgressSpinner)
     nuxtApp.vueApp.component('Chart',Chart)
     nuxtApp.vueApp.component('Slider',Slider);
