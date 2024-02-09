@@ -71,6 +71,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     nuxtApp.vueApp.use(PrimeVue, {ripple: true});
     nuxtApp.vueApp.use(ToastService);
     // nuxtApp.vueApp.use(Quill)
+    nuxtApp.vueApp.component('Quill',Quill)
     nuxtApp.vueApp.use(ConfirmationService);
     nuxtApp.vueApp.component('InputGroup',InputGroup)
     nuxtApp.vueApp.component('InputGroupAddon', InputGroupAddon)
