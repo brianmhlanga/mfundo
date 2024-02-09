@@ -62,20 +62,11 @@ model Student {
   grade                  String?
   profile                profile_type @default(STUDENT)
   password               String?
-  exams                  Applications[]
+  answers                 QuestionAnswers[]
   current_logged_in_at   DateTime?
   last_logged_in_at      DateTime?
 }
 
-model Applications {
-  id String @id @unique @default(cuid())
-  exam_status Boolean? @default(false)
-  postingId String?
-  applicantId String?
-  status exam_status @default(NOT_TAKEN)
-  jobpostings          Subject? @relation(fields: [postingId], references: [id])
-  applicant            Student? @relation(fields: [applicantId],references: [id])
-}
 
 enum exam_status {
   NOT_TAKEN
@@ -88,9 +79,7 @@ model Subject {
   name              String?
   description         String?                @db.VarChar(10000)
   status              Subject_status    @default(OPEN)
-  questionaire        Questionaire[]
-  applications        Applications[]
-  questionaireanswers QuestionaireAnswers[]
+  exam Exam[]
 }
 
 
@@ -102,14 +91,16 @@ enum Subject_status {
 model Exam {
   id String @id @default(cuid())
   exam_name String
-  questions Questionaire[]
+  subject_id String
+  exam_time DateTime
+  subject  Subject @relation(fields: [subject_id],references: [id])
+  questions Questions[]
   created_at          DateTime       @default(now())
   updated_at          DateTime @updatedAt
 
 }
-model Questionaire {
+model Questions {
   id                          String      @id @default(cuid())
-  postingId                   String?
   question_type               String
   options                     Json?     
   score                       Int?
@@ -118,23 +109,22 @@ model Questionaire {
   created_by_id               Int?
   boolean_answer              Boolean?
   multichoice_answer          String? 
-  applicant_id                String?
   question                    String      @db.VarChar(10000)
   student_boolean_answer      Boolean?
   student_multichoice_answer  String?
   student_unstructured_answer String?
+  answers QuestionAnswers[]
   exam_id String
   exam Exam     @relation(fields: [exam_id],references: [id])
   correct                     Boolean?    @default(false)
-  subject                 Subject? @relation(fields: [postingId], references: [id], map: "Questionaire_postingId_fkey")
 
-  @@index([postingId], map: "Questionaire_postingId_fkey")
 }
 
-model QuestionaireAnswers {
-  id                          String
-  postingId                   String
+model QuestionAnswers {
+  id                          String @id @default(cuid())
   question                    String      @db.VarChar(10000)
+  question_id String
+  questions Questions @relation(fields: [question_id],references: [id])
   question_type               String
   multichoice_answer          String?
   boolean_answer              Boolean?
@@ -142,16 +132,15 @@ model QuestionaireAnswers {
   score                       Int?
   student_boolean_answer      Boolean?
   student_multichoice_answer  String?
+  student_id String
+  student Student @relation(fields: [student_id],references: [id])
   student_unstructured_answer String?
   correct                     Boolean?    @default(false)
   created_at                  DateTime    @default(now())
   created_by_name             String?
   created_by_id               Int?
-  applicant_id                String?
-  id_primary                  String      @id @default(cuid())
-  jobpostings                 Subject @relation(fields: [postingId], references: [id], map: "QuestionaireAnswers_postingId_fkey")
-
-  @@index([postingId], map: "QuestionaireAnswers_postingId_fkey")
+ 
+  
 }
 
 
