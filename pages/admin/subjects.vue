@@ -104,7 +104,9 @@ const addSubject = async () => {
     }
     let result = await managementStore.addSubject(data).then( async(data) => {
         if(data.data.success) {
-      
+        let all_subjects = await managementStore.listSubjects().then((data) => {
+         subjects.value = data?.data?.subjects
+        }) 
         toast.add({ severity: 'info', summary: 'Success', detail: "Added Subject", life: 3000 });
         addSubjectModal.value = false
        }
