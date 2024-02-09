@@ -10,28 +10,48 @@
 
                     <div class="field mb-4 col-12">
                     <label for="nickname2" class="font-medium text-900">Subject</label>
-                    <DropDown  optionLabel="name" placeholder="Select Subject" class="w-full md:w-14rem" />
+                    <DropDown  optionLabel="name" :options="subjects" placeholder="Select Subject" class="w-full md:w-14rem" />
                     </div>
                     <div class="field mb-4 col-12">
                     <label for="nickname2" class="font-medium text-900">Test Time</label>
-                    <InputGroup class="mb-4">
-                        <InputGroupAddon>
-                            Hours
-                        </InputGroupAddon>
-                        <InputNumber v-model="hours" placeholder="Enter Number of Hours" :useGrouping="false" :min="0" />
-                    </InputGroup>
-                    <InputGroup>
-                        <InputGroupAddon>Minutes</InputGroupAddon>
-                        <InputNumber v-model="minutes" placeholder="Enter Number of Minutes" :min="0" :max="59" />
-                    </InputGroup>
+                    <Calendar id="calendar-timeonly" v-model="hours" timeOnly placeholder="Pick hours and minutes"/>
                     
                     </div>
-                    <div class="mb-4 col-12">
+                    <div class="mb-4 col-3">
                         <Button @click="createQuestionModal = true" class="mb-5" label="Create Question" icon="pi pi-plus" />
+                    </div>
+                        <Panel class="col-12 mb-5" v-for="(question, index) in questions">
+                            <template #header>
+                                <div class="flex align-items-center gap-2">
+                                    <span class="font-bold">Question {{ index+1 }}</span>
+                                </div>
+                            </template>
+                            <template #footer>
+                                <div class="flex flex-wrap align-items-center">
+                                    <div v-for="(answer, index) in question?.multichoice_options" 
+                                     class="ml-0 md:ml-2 mt-2 md:mt-0 border-1 p-1 px-2 border-round flex align-items-center font-medium surface-100 text-600 surface-border"
+                                     :class="{ 'bg-color': answer === question.multichoice_answer }">
+                                        <i class="mr-2">{{ String.fromCharCode(65 + index) }}</i>
+                                        <span>{{ answer }}</span>
+                                    </div>
+                                </div>
+                            </template>
+                            <template #icons>
+                                <button class="p-panel-header-icon p-link mr-2">
+                                    <span class="pi pi-pencil"></span>
+                                </button>
+                                <button @click="deleteQuestion(index)" class="p-panel-header-icon p-link mr-2">
+                                    <span class="pi pi-trash"></span>
+                                </button>
+                            </template>
+                            <p v-html="question.question" class="m-0">
+                            </p>
+                        </Panel>
+                        <div class="mb-4 col-3">
+                        <Button @click="createQuestionaire()" class="mb-5" label="Create Exam" icon="pi pi-file" />
                     </div>
                     </div>
                 </div>
-
            </div>
            </div>
            <!---->
@@ -43,12 +63,7 @@
                     <Editor v-model="question" editorStyle="height: 200px"/>
                     </div>
                     <div class="surface-border border-top-1 opacity-50 mb-3 col-12"></div>
-                    <div class="field mb-4 col-12 md:col-6">
-                    <label for="bio2" class="font-medium text-900">Question Type</label>
-                    <SelectButton v-model="question_type" :options="question_types" aria-labelledby="single" />
-                    </div>
-                    
-                    <div v-if="question_type === 'MultiChoice'" class="field mb-4 col-12 md:col-6">
+                    <div v-if="question_type === 'MultiChoice'" class="field mb-4 col-12 md:col-12">
                     <label for="city2" class="font-medium text-900">Set Up Options</label>
                     <Chips :max="4" v-model="multichoice_options" :allowDuplicate="false">
                         <template #chip="slotProps">
@@ -58,7 +73,7 @@
                         </template>
                     </Chips>
                     </div>
-                    <div v-if="question_type === 'MultiChoice'" class="field mb-4 col-12 md:col-6">
+                    <div v-if="question_type === 'MultiChoice'" class="field mb-4 col-12 md:col-12">
                     <label for="state2" class="font-medium text-900">Required Answer</label>
                     <ListBox v-model="multichoice_answer" :options="multichoice_options" optionLabel=""  style="width:100%" />
                     </div>
@@ -71,7 +86,7 @@
                     </div>
                     </div>
                     <div class="mb-4 col-12">
-                        <Button @click="createQuestionaire()" class="mb-5" label="Add Question" icon="pi pi-plus" />
+                        <Button @click="pushToQuestions()" class="mb-5" label="Add Question" icon="pi pi-plus" />
                     </div>
                     
                     <div class="surface-border border-top-1 opacity-50 mb-3 col-12"></div>
@@ -86,12 +101,14 @@
     import { storeToRefs } from "pinia";
     import Swal from 'sweetalert2';
     import { useToast } from 'primevue/usetoast';
+    import { useManagementStore } from "~/stores/management";
 
     definePageMeta({
         middleware: "auth"
     });
     const toast = useToast();
     const recruitmentStore = useRecruitmentStore();
+    const managementStore = useManagementStore();
     const displayResults = ref(false);
     const createQuestionModal = ref(false);
     const number_of_questions = storeToRefs(recruitmentStore).number_of_questions;
@@ -101,12 +118,16 @@
     const displayQuestionaire = ref(false);
     const hours = ref();
     const minutes = ref();
+    const menu = ref(null);
     const displayApplication = ref(false);
     const displayQuestionsList = ref(false);
     const openings = storeToRefs(recruitmentStore).jobOpenings;
     const employees = storeToRefs(recruitmentStore).employeeData
     const selectedOpening = storeToRefs(recruitmentStore).selectedOpening
     const date1 = ref();
+    const toggle = (event) => {
+        menu.value.toggle(event);
+    };
     const items = ref([
     {
         label: 'Mark As Best Fit',
@@ -131,18 +152,18 @@
     }
 ]);
     const postId = storeToRefs(recruitmentStore).postId
-    const question_type = storeToRefs(recruitmentStore).question_type
+    const question_type = ref('MultiChoice')
     const question_types = storeToRefs(recruitmentStore).question_types
-    const boolean_answer = storeToRefs(recruitmentStore).boolean_answer
-    const multichoice_answer = storeToRefs(recruitmentStore).multichoice_answer
-    const multichoice_options = storeToRefs(recruitmentStore).multichoice_options
+    const boolean_answer = ref(false)
+    const multichoice_answer = ref()
+    const multichoice_options = ref()
     const options = storeToRefs(recruitmentStore).options
     const types = storeToRefs(recruitmentStore).types
     const is_editing = ref(false)
     const applicationsList = storeToRefs(recruitmentStore).applicationsList
-    const question = storeToRefs(recruitmentStore).question
+    const question = ref()
     const questionsList = storeToRefs(recruitmentStore).questionsList
-    const score = storeToRefs(recruitmentStore).score
+    const score = ref()
     const description = storeToRefs(recruitmentStore).description
     const department = storeToRefs(recruitmentStore).department
     const hiring_manager = storeToRefs(recruitmentStore).hiring_manager
@@ -153,9 +174,19 @@
     const location = storeToRefs(recruitmentStore).location
     const skills = storeToRefs(recruitmentStore).skills
     const vacancyList = storeToRefs(recruitmentStore).vacancyList
+    const subjects = ref()
+    const questions = ref([])
   
     onMounted(async ()=>{
+        let subjectss = await managementStore.listSubjects().then((result) => {
+            console.log(result)
+            subjects.value = result?.data?.subjects
+        })
     });
+    const deleteQuestion = (index) => {
+        questions.value.splice(index,1)
+        toast.add({ severity: 'success', summary: 'Success', detail: 'Question succesfully removed', life: 3000})
+    }
 
     const test = ({textValue}) => {
         question.value = textValue;
@@ -273,6 +304,23 @@
                     })
                 }
     };
+    const pushToQuestions = () => {
+        let data = {
+            postingId: postId.value,
+            question: question.value,
+            question_type: question_type.value,
+            multichoice_answer: multichoice_answer.value,
+            boolean_answer: boolean_answer.value,
+            multichoice_options: multichoice_options.value,
+            score: score.value,
+        }
+        questions.value.push(data)
+        question.value = null
+        multichoice_answer.value = null
+        boolean_answer.value = false
+        multichoice_options.value = []
+        score.value = null
+    }
     const createQuestionaire = async () =>{
             let result = await recruitmentStore.createQuestionaire();
           
@@ -304,7 +352,6 @@
             let result = await recruitmentStore.updateSingleQuestion();
           
              if(result.data.success){
-                // const loanTypes = await setupStore.getAllLoanTypes();
                       Swal.fire({
                     title: 'Awesome',
                     text: 'Question Successfully Updated',
@@ -342,6 +389,18 @@
 }
 .p-listbox .p-listbox-list .p-listbox-item.p-highlight {
     color: #ffffff;
-    background: #EFF6FF;
+    background: #2ab94d !important;
+}
+.p-chips .p-chips-multiple-container .p-chips-token {
+    padding: 0.375rem 0.75rem;
+    margin-bottom: 10px;
+    margin-right: 0.5rem;
+    background: #d6d6d6;
+    color: #495057;
+    border-radius: 16px;
+}
+.bg-color {
+    background-color: #26cb16 !important;
+    color: white !important;
 }
 </style>
