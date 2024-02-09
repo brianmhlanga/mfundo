@@ -108,7 +108,7 @@ export const useRecruitmentStore = defineStore('recruitment', {
         location: null,
         skills: null,
         vacancyList: null,
-        question_types: ['Yes/No','MultiChoice','UnStructured'],
+        question_types: ['MultiChoice'],
         multichoice_options: [],
         multichoice_answer: null,
         question_type: null,
@@ -686,6 +686,37 @@ export const useRecruitmentStore = defineStore('recruitment', {
             var config = { 
                 method: 'post',
                 url: '/recruitment/update',
+                headers: { 
+                    'Content-Type': 'application/json'
+                },
+                data : data
+            };
+         
+            const result: any = await axios(config).then(function (response) {
+                return {
+                    data: response.data,
+                    success: true
+                 }
+            })
+            .catch(function (error) {
+                console.log(error);
+                return {
+                    success: false
+                 }
+            });
+            console.log("my created vacancy")
+            console.log({result})
+            console.log(result.data.success)
+            return result;
+         },
+         async  createExam(info:any){
+            var data = JSON.stringify({
+             "data" : info,
+            });
+         
+            var config = { 
+                method: 'post',
+                url: '/recruitment/questionaire/create',
                 headers: { 
                     'Content-Type': 'application/json'
                 },
