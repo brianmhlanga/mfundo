@@ -15,7 +15,7 @@
         </div>
     </div>
 </template>
-<style>
+<style scoped>
 .text-center.myy-6.relative {
     margin-top: 130px;
     margin-bottom: 10px;
