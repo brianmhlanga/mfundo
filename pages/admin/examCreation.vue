@@ -7,14 +7,22 @@
                <!--table will come heres-->
                <div class="surface-card p-4  border-round">
                 <div class="grid formgrid p-fluid">
-
+                    <div class="field mb-4 col-12">
+                    <label for="nickname2" class="font-medium text-900">Exam Name</label>
+                    <InputText v-model="exam_name" placeholder="Exam Name e.g History Grade 5" class="w-full md:w-col-12" />
+                    </div>
                     <div class="field mb-4 col-12">
                     <label for="nickname2" class="font-medium text-900">Subject</label>
-                    <DropDown  optionLabel="name" :options="subjects" placeholder="Select Subject" class="w-full md:w-14rem" />
+                    <DropDown v-model="selectedSubject"  optionLabel="name" optionValue="id" :options="subjects" placeholder="Select Subject" class="w-full md:w-14rem" />
                     </div>
                     <div class="field mb-4 col-12">
                     <label for="nickname2" class="font-medium text-900">Test Time</label>
-                    <Calendar id="calendar-timeonly" v-model="hours" timeOnly placeholder="Pick hours and minutes"/>
+                    <InputGroup>
+                        <InputGroupAddon class="tect">Hours</InputGroupAddon>
+                        <InputNumber v-model="hours" :min="0"/>
+                        <InputGroupAddon class="tect">Minutes</InputGroupAddon>
+                        <InputNumber v-model="minutes" :min="0" :max="59" />
+                    </InputGroup>
                     
                     </div>
                     <div class="mb-4 col-3">
@@ -28,7 +36,7 @@
                             </template>
                             <template #footer>
                                 <div class="flex flex-wrap align-items-center">
-                                    <div v-for="(answer, index) in question?.multichoice_options" 
+                                    <div v-for="(answer, index) in question?.options" 
                                      class="ml-0 md:ml-2 mt-2 md:mt-0 border-1 p-1 px-2 border-round flex align-items-center font-medium surface-100 text-600 surface-border"
                                      :class="{ 'bg-color': answer === question.multichoice_answer }">
                                         <i class="mr-2">{{ String.fromCharCode(65 + index) }}</i>
@@ -48,7 +56,7 @@
                             </p>
                         </Panel>
                         <div class="mb-4 col-3">
-                        <Button @click="createQuestionaire()" class="mb-5" label="Create Exam" icon="pi pi-file" />
+                        <Button @click="createExam()" class="mb-5" label="Create Exam" icon="pi pi-file" />
                     </div>
                     </div>
                 </div>
@@ -102,11 +110,13 @@
     import Swal from 'sweetalert2';
     import { useToast } from 'primevue/usetoast';
     import { useManagementStore } from "~/stores/management";
+    import { useExamsStore } from "~/stores/exams";
 
     definePageMeta({
         middleware: "auth"
     });
     const toast = useToast();
+    const examsStore = useExamsStore()
     const recruitmentStore = useRecruitmentStore();
     const managementStore = useManagementStore();
     const displayResults = ref(false);
@@ -116,6 +126,8 @@
     const number_of_unstructured_questions = storeToRefs(recruitmentStore).number_of_unstructured_questions
     const createExamModal = ref(false)
     const displayQuestionaire = ref(false);
+    const selectedSubject = ref()
+    const exam_name = ref()
     const hours = ref();
     const minutes = ref();
     const menu = ref(null);
@@ -236,82 +248,13 @@
         displayQuestionsList.value = false
         is_editing.value = false
     }
-    const createPost =  async () => {
-            let result =  await recruitmentStore.createJobPost();
-            if(result.data.success){
-                      Swal.fire({
-                    title: 'Awesome',
-                    text: 'Job Post Succesfully Created',
-                    icon: 'success',
-                    confirmButtonText: 'Done'})
-                
-                }else{
-                   Swal.fire({
-                    title: 'Error!',
-                    text: result.data.message,
-                    icon: 'error',
-                    confirmButtonText: 'Try Again'
-                    })
-                }
-    };
-    const setStatusAsBestFit =  async (applicantId,postingId,applicationId) => {
-            let status = "BestFit"
-            let result = await recruitmentStore.updateApplicantStatus(applicantId,postingId,applicationId,status);
-            if(result.data.success){
-                toast.add({ severity: 'success', summary: 'Success', detail: 'Application Set As Best Fit', life: 3000});
-                let applications = await recruitmentStore.getApplications(postingId);
-                }else{
-                toast.add({ severity: 'warn', summary: 'Error', detail: result.data.message, life: 3000});
-                }
-    };
-    const setStatusAsNotFit =  async (applicantId,postingId,applicationId) => {
-            let status = "NotFit"
-            let result = await recruitmentStore.updateApplicantStatus(applicantId,postingId,applicationId,status);
-            if(result.data.success){
-
-                toast.add({ severity: 'success', summary: 'Success', detail: 'Application Set As Not Fit', life: 3000});
-                let applications = await recruitmentStore.getApplications(postingId);
-                }else{
-                toast.add({ severity: 'warn', summary: 'Error', detail: result.data.message, life: 3000});
-                }
-    };
-    const setStatusAsModerateFit =  async (applicantId,postingId,applicationId) => {
-            let status = "Moderate"
-            let result = await recruitmentStore.updateApplicantStatus(applicantId,postingId,applicationId,status);
-            if(result.data.success){
-
-                toast.add({ severity: 'success', summary: 'Success', detail: 'Application Set As Moderate Fit', life: 3000});
-                let applications = await recruitmentStore.getApplications(postingId);
-                }else{
-                toast.add({ severity: 'warn', summary: 'Error', detail: result.data.message, life: 3000});
-                }
-    };
-    const updatePost =  async () => {
-            let result =  await recruitmentStore.updateJobPost();
-            if(result.data.success){
-                      Swal.fire({
-                    title: 'Awesome',
-                    text: 'Job Post Succesfully Updated',
-                    icon: 'success',
-                    confirmButtonText: 'Done'})
-                
-                }else{
-                   Swal.fire({
-                    title: 'Error!',
-                    text: result.data.message,
-                    icon: 'error',
-                    confirmButtonText: 'Try Again'
-                    })
-                }
-    };
     const pushToQuestions = () => {
         let data = {
-            postingId: postId.value,
             question: question.value,
             question_type: question_type.value,
             multichoice_answer: multichoice_answer.value,
             boolean_answer: boolean_answer.value,
-            multichoice_options: multichoice_options.value,
+            options: multichoice_options.value,
             score: score.value,
         }
         questions.value.push(data)
@@ -321,17 +264,27 @@
         multichoice_options.value = []
         score.value = null
     }
-    const createQuestionaire = async () =>{
-            let result = await recruitmentStore.createQuestionaire();
-          
+    const createExam = async () =>{
+            let data = {
+                examHours: hours.value,
+                examMinutes: minutes.value,
+                subject: selectedSubject.value,
+                examName: exam_name.value,
+                questions: questions.value,
+            }
+            let result = await recruitmentStore.createExam(data);
              if(result.data.success){
                 // const loanTypes = await setupStore.getAllLoanTypes();
-                      Swal.fire({
+                    Swal.fire({
                     title: 'Awesome',
-                    text: 'Question Successfully Created',
+                    text: 'Exam Successfully Created',
                     icon: 'success',
                     confirmButtonText: 'Done'})
-
+                hours.value = null,
+                minutes.value = null,
+                selectedSubject.value = null,
+                exam_name.value = null,
+                questions.value = [],
                 question.value = "",
                 question_type.value = "",
                 multichoice_answer.value = "",
@@ -399,8 +352,22 @@
     color: #495057;
     border-radius: 16px;
 }
+.p-inputgroup-addon.tect {
+    font-size: 10px;
+}
+.p-inputgroup {
+    width: 30%;
+}
 .bg-color {
     background-color: #26cb16 !important;
     color: white !important;
+}
+</style>
+<style scoped>
+.p-inputgroup-addon.tect {
+    font-size: 10px;
+}
+.p-inputgroup {
+    width: 30%;
 }
 </style>
