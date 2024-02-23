@@ -63,6 +63,7 @@ model Student {
   profile                profile_type @default(STUDENT)
   password               String?
   answers                 QuestionAnswers[]
+  times Time[]
   current_logged_in_at   DateTime?
   last_logged_in_at      DateTime?
 }
@@ -92,12 +93,15 @@ model Exam {
   id String @id @default(cuid())
   exam_name String
   subject_id String
-  exam_time DateTime
+  exam_hours Int  @default(0)
+  exam_minutes Int @default(59)
   subject  Subject @relation(fields: [subject_id],references: [id])
   questions Questions[]
+  solutions QuestionAnswers[]
+  student_time Time[]
   created_at          DateTime       @default(now())
   updated_at          DateTime @updatedAt
-
+  
 }
 model Questions {
   id                          String      @id @default(cuid())
@@ -135,12 +139,26 @@ model QuestionAnswers {
   student_id String
   student Student @relation(fields: [student_id],references: [id])
   student_unstructured_answer String?
+  exam_id String
+  exam Exam     @relation(fields: [exam_id],references: [id])
   correct                     Boolean?    @default(false)
   created_at                  DateTime    @default(now())
   created_by_name             String?
   created_by_id               Int?
  
   
+}
+
+model Time {
+  id String @id @default(cuid())
+  student_id String
+  student Student @relation(fields: [student_id],references: [id])
+  exam_id String
+  exam Exam     @relation(fields: [exam_id],references: [id])
+  hours Int
+  minutes Int
+  seconds Int
+  updated_at DateTime @updatedAt
 }
 
 
