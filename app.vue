@@ -16,4 +16,7 @@
 </template>
  <style>
     @import "~/public/css/theme.css";
+.surface-section {
+background-color: #f2f5fb!important;
+}
 </style>
