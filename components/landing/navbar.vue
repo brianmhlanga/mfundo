@@ -85,25 +85,15 @@
         <div v-if="first_name" class="flex justify-content-between lg:block border-top-1 lg:border-top-none surface-border py-3 lg:py-0 px-6 lg:px-0 mt-3 lg:mt-0">
         <button  class="p-button p-component p-button-text font-bold h-full" type="button" aria-label="Login" data-pc-name="button" data-pc-section="root" data-pd-ripple="true" style="border-radius: 0px;">
             <!---->
-            <span class="p-button-label" data-pc-section="label">Hi, {{first_name}} {{ last_name }} </span>
+            <span class="p-button-label btrh" data-pc-section="label">Hi, {{first_name}} {{ last_name }} </span>
             <!---->
             <span role="presentation" aria-hidden="true" data-p-ink="true" data-p-ink-active="false" class="p-ink" data-pc-name="ripple" data-pc-section="root"></span>
         </button>
-        <button v-if="profile === 'ADMIN'" @click="navigateTo('/admin/dashboard')" class="p-button p-component ml-3 font-bold h-full" type="button" aria-label="Register" data-pc-name="button" data-pc-section="root" data-pd-ripple="true" style="border-radius: 0px;">
-            <!---->
-            <span class="p-button-label" data-pc-section="label">Admin Dashboard</span>
-            <!---->
-            <span role="presentation" aria-hidden="true" data-p-ink="true" data-p-ink-active="false" class="p-ink" data-pc-name="ripple" data-pc-section="root"></span>
-        </button>
-        <button @click="logOut" class="p-button p-component ml-3 font-bold h-full" type="button" aria-label="Register" data-pc-name="button" data-pc-section="root" data-pd-ripple="true" style="border-radius: 0px;">
-            <!---->
-            <span class="p-button-label" data-pc-section="label">Log Out</span>
-            <!---->
-            <span role="presentation" aria-hidden="true" data-p-ink="true" data-p-ink-active="false" class="p-ink" data-pc-name="ripple" data-pc-section="root"></span>
-        </button>
+        <Button v-if="profile === 'ADMIN'" @click="navigateTo('/admin/dashboard')" label="Admin Dashboard" />
+        <Button class="logout" @click="logOut" label="Log Out"/>
         </div>
         <div v-else class="flex justify-content-between lg:block border-top-1 lg:border-top-none surface-border py-3 lg:py-0 px-6 lg:px-0 mt-3 lg:mt-0">
-        <button @click="navigateTo('/login')" class="p-button p-component p-button-text font-bold h-full" type="button" aria-label="Login" data-pc-name="button" data-pc-section="root" data-pd-ripple="true" style="border-radius: 0px;">
+        <button @click="navigateTo('/login')" class="p-button p-component p-button-text font-bold h-full homelog" type="button" aria-label="Login" data-pc-name="button" data-pc-section="root" data-pd-ripple="true" style="border-radius: 0px;">
             <!---->
             <span class="p-button-label" data-pc-section="label">Login</span>
             <!---->
@@ -130,3 +120,19 @@ const logOut = async () => {
     let result = await authStore.logout()
 }
 </script>
+<style scoped>
+a {
+    color: #000000;
+    text-decoration: none;
+}
+span.p-button-label.btrh {
+    color: black;
+}
+button.p-button.p-component.logout {
+    background-color: #6c6c6c00;
+    border-radius: 30px;
+    width: 159px;
+    border-color: #a5a5a5;
+    color: black;
+}
+</style>
