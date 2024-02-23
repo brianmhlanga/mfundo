@@ -39,57 +39,52 @@
         </a>
         </div>
         <div class="surface-section px-4 py-8 md:px-6 lg:px-8">
-        <div class="text-center text-900 text-5xl font-bold mb-5">Featured Exams</div>
+        <div class="text-center text-900 text-5xl font-bold mb-5">Our Exams</div>
         <div class="grid nogutter">
-            <div class="col-12 lg:col-3 p-3">
-            <div class="custom-shadow-2 border-round h-full surface-card">
-            <img src="https://blocks.primevue.org/images/blocks/blog/blog-3.jpg" alt="Image" class="block w-full border-round-top">
-            <div class="p-4">
-                <span class="block font-medium text-orange-600 mb-3">Science</span>
-                <div class="text-xl text-900 font-medium mb-3 line-height-3">Biology G7</div>
-                <div class="line-height-3 mb-3 text-700 mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
-                <Button class="p-button p-component w-full" label="Take Exam" icon="pi pi-map" />
+            <div v-for="exam in exams" class="col-12 md:col-6 xl:col-3 p-3">
+            <div class="surface-card shadow-2 border-round p-4">
+                <div class="flex border-bottom-1 surface-border pb-4">
+                <div class="flex flex-column align-items-start">
+                    <span class="text-xl text-900 font-medium mb-1">{{ exam?.exam_name }}</span>
+                    <span class="text-600 font-medium mb-2">{{ exam?.subject?.name }}</span>
+                    <span v-if="exam?.exam_hours <= 0" class="bg-blue-50 text-blue-400 border-round inline-flex py-1 px-2 text-sm">{{ exam?.exam_minutes }} Minutes</span>
+                    <span v-else-if="exam?.exam_hours > 0 && exam?.exam_minutes === 0" class="bg-blue-50 text-blue-400 border-round inline-flex py-1 px-2 text-sm">Time ({{ exam?.exam_hours }} hours)</span>
+                    <span v-else class="bg-blue-50 text-blue-400 border-round inline-flex py-1 px-2 text-sm">Time ({{ exam?.exam_hours }} hours & {{ exam?.exam_minutes }} minutes)</span>
+                </div>
+                </div>
+                <div class="flex justify-content-between pt-4">
+                <button class="p-button p-component p-button-outlined p-button-secondary w-6 mr-2" type="button" aria-label="View" data-pc-name="button" data-pc-section="root" data-pd-ripple="true">
+                    <span class="p-button-icon p-button-icon-left pi pi-eye" data-pc-section="icon"></span>
+                    <span class="p-button-label" data-pc-section="label">History</span>
+                    <!---->
+                    <span role="presentation" aria-hidden="true" data-p-ink="true" data-p-ink-active="false" class="p-ink" data-pc-name="ripple" data-pc-section="root"></span>
+                </button>
+                <button @click="navigateTo(`/takeExam-${exam.id}-${id}`)" class="p-button p-component p-button-outlined p-button-secondary w-6 ml-2" type="button" aria-label="Follow" data-pc-name="button" data-pc-section="root" data-pd-ripple="true">
+                    <span class="p-button-icon p-button-icon-left pi pi-pencil" data-pc-section="icon"></span>
+                    <span class="p-button-label" data-pc-section="label">Exam</span>
+                    <!---->
+                    <span role="presentation" aria-hidden="true" data-p-ink="true" data-p-ink-active="false" class="p-ink" data-pc-name="ripple" data-pc-section="root"></span>
+                </button>
+                </div>
             </div>
             </div>
-        </div>
-        <div class="col-12 lg:col-3 p-3">
-            <div class="custom-shadow-2 border-round h-full surface-card">
-            <img src="https://blocks.primevue.org/images/blocks/blog/blog-3.jpg" alt="Image" class="block w-full border-round-top">
-            <div class="p-4">
-                <span class="block font-medium text-orange-600 mb-3">Science</span>
-                <div class="text-xl text-900 font-medium mb-3 line-height-3">Biology G7</div>
-                <div class="line-height-3 mb-3 text-700 mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
-                <Button class="p-button p-component w-full" label="Take Exam" icon="pi pi-map" />
-            </div>
-            </div>
-        </div>
-        <div class="col-12 lg:col-3 p-3">
-            <div class="custom-shadow-2 border-round h-full surface-card">
-            <img src="https://blocks.primevue.org/images/blocks/blog/blog-3.jpg" alt="Image" class="block w-full border-round-top">
-            <div class="p-4">
-                <span class="block font-medium text-orange-600 mb-3">Science</span>
-                <div class="text-xl text-900 font-medium mb-3 line-height-3">Biology G7</div>
-                <div class="line-height-3 mb-3 text-700 mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
-                <Button class="p-button p-component w-full" label="Take Exam" icon="pi pi-map" />
-            </div>
-            </div>
-        </div>
-        <div class="col-12 lg:col-3 p-3">
-            <div class="custom-shadow-2 border-round h-full surface-card">
-            <img src="https://blocks.primevue.org/images/blocks/blog/blog-3.jpg" alt="Image" class="block w-full border-round-top">
-            <div class="p-4">
-                <span class="block font-medium text-orange-600 mb-3">Science</span>
-                <div class="text-xl text-900 font-medium mb-3 line-height-3">Biology G7</div>
-                <div class="line-height-3 mb-3 text-700 mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
-                <Button class="p-button p-component w-full" label="Take Exam" icon="pi pi-map" />
-            </div>
-            </div>
-        </div>
         </div>
         </div>
     </div>
     </div>
 </template>
+<script lang="ts" setup>
+import { useExamsStore } from '~/stores/exams';
+const exams = ref()
+let examsStore = useExamsStore()
+//@ts-ignore
+const { value: { first_name, last_name, profile, id }} = useCookie('user');
+onMounted( async() => {
+    let result = await examsStore.getExams().then((data) => {
+      exams.value = data?.data?.exams
+    })
+})
+</script>
 <style>
 .custom-shadow-2 {
     background-color: #fff;
