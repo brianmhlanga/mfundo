@@ -10,7 +10,7 @@ generator erd {
 datasource db {
   provider = "mysql"
   // url      = env("DATABASE_URL")
-  url      = "mysql://mfundo:bm19962019@localhost:3306/mfundo?schema=public"
+  url      = "mysql://mfundo:bm19962099@localhost:3306/mfundo?schema=public"
 }
 model User {
   id                String         @id @default(cuid())
