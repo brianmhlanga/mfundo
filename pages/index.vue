@@ -510,9 +510,9 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="thumb">
-                                    <a href="./index.html">
-                                        <img src="/assets/images/footer/footer-bottom.png" alt="footer">
-                                    </a>
+                                    <NuxtLink to="/">
+                                        <img src="/images/mfundo.svg" alt="logo">
+                                    </NuxtLink>
                                 </div>
                             </div>
                         </div>
