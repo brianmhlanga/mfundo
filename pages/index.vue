@@ -601,6 +601,7 @@ a.custom-button {
     padding: 0 35px;
     display: inline-block;
     /* text-transform: uppercase; */
+    cursor: pointer;
     font-weight: 500;
     font-size: 16px;
     border-radius: 25px;
@@ -693,6 +694,7 @@ a.custom-buttonn {
     text-transform: none!important;
     font-weight: 500;
     font-size: 16px;
+    cursor: pointer;
     border-radius: 25px;
     border: 1px solid #3ec3ab;
     margin-right: 6px;
@@ -704,5 +706,12 @@ a.custom-button.btn-md.theme-one {
 a.custom-button.btn-md.theme-one:hover {
     color: white !important;
 }
-
+.menu li a {
+    padding: 7px !important;
+    font-weight: 500 !important;
+    font-family: Poppins, sans-serif !important;
+    color: #07294D !important;
+    text-transform: capitalize !important;
+    position: relative !important;
+}
 </style>
