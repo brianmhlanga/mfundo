@@ -1,104 +1,131 @@
 <template>
-    <NuxtLayout name="default">
-        <div class="block-content">
-        <div class="">
-            <div class="flex">
-                <div class="surface-section w-full md:w-6 p-6 md:p-8">
-                    <div class="mb-5">
-                        <img src="https://blocks.primevue.org//images/blocks/logos/hyper.svg" alt="Image" height="50" class="mb-3">
-                        <div class="text-900 text-3xl font-medium mb-3">Welcome To Mfundo</div>
-                        <span class="text-600 font-medium mr-2">Already have an account?</span>
-                        <a @click="navigateTo('/login')" class="font-medium no-underline text-blue-500 cursor-pointer">Sign In!</a>
-                    </div>
-                    <div class="flex">
-                        <div class="col-6 mb-3">
-                        <label for="firstName" class="block text-900 font-medium mb-2">First Name</label>
-                        <input v-model="first_name" class="p-inputtext p-component w-full" data-pc-name="inputtext" data-pc-section="root" id="firstName" type="text" placeholder="First Name">
-                        </div>
-                        <div class="col-6 mb-3">
-                        <label for="lastName" class="block text-900 font-medium mb-2">Last Name</label>
-                        <input v-model="last_name" class="p-inputtext p-component w-full" data-pc-name="inputtext" data-pc-section="root" id="lastName" type="text" placeholder="Last Name">
-                        </div>
-                    </div>
-                    <div class="flex">
-                        <div class="col-6 mb-3">
-                        <label for="firstName" class="block text-900 font-medium mb-2">Date of Birth</label>
-                        <Calendar v-model="date_of_birth" class="mydate" showIcon iconDisplay="input" />
-                        </div>
-                        <div class="col-6 mb-3">
-                        <label for="lastName" class="block text-900 font-medium mb-2">Country</label>
-                        <DropDown v-model="selectedCountry" :options="countries" filter optionLabel="name" placeholder="Select a Country" class="w-full">
-                            <template #value="slotProps">
-                                <div v-if="slotProps.value" class="flex align-items-center">
-                                    <img :alt="slotProps.value.label" src="https://primefaces.org/cdn/primevue/images/flag/flag_placeholder.png" :class="`mr-2 flag flag-${slotProps.value.code.toLowerCase()}`" style="width: 18px" />
-                                    <div>{{ slotProps.value.name }}</div>
-                                </div>
-                                <span v-else>
-                                    {{ slotProps.placeholder }}
-                                </span>
-                            </template>
-                            <template #option="slotProps">
-                                <div class="flex align-items-center">
-                                    <img :alt="slotProps.option.label" src="https://primefaces.org/cdn/primevue/images/flag/flag_placeholder.png" :class="`mr-2 flag flag-${slotProps.option.code.toLowerCase()}`" style="width: 18px" />
-                                    <div>{{ slotProps.option.name }}</div>
-                                </div>
-                            </template>
-                        </Dropdown>
-                        </div>
-                    </div>
-                    <div class="flex">
-                        <div class="col-6 mb-3">
-                        <label for="firstName" class="block text-900 font-medium mb-2">School/Institution Name</label>
-                        <input v-model="school" class="p-inputtext p-component w-full" data-pc-name="inputtext" data-pc-section="root"  type="text" placeholder="School/Institution Name">
-                        </div>
-                        <div class="col-6 mb-3">
-                        <label for="lastName" class="block text-900 font-medium mb-2">Grade/Class</label>
-                        <input v-model="grade" class="p-inputtext p-component w-full" data-pc-name="inputtext" data-pc-section="root"  type="text" placeholder="Grade/Class">
-                        </div>
-                    </div>
-                    <div class="flex">
-                        <div class="col-6 mb-3">
-                        <label for="firstName" class="block text-900 font-medium mb-2">Email</label>
-                        <input v-model="email" class="p-inputtext p-component w-full" data-pc-name="inputtext" data-pc-section="root"  type="email" placeholder="Email Address">
-                        </div>
-                        <div class="col-6 mb-3">
-                        <label for="lastName" class="block text-900 font-medium mb-2">Phone Number</label>
-                        <input v-model="phone" class="p-inputtext p-component w-full" data-pc-name="inputtext" data-pc-section="root"  type="text" placeholder="Phone Number">
-                        </div>
-                        
-                    </div>
-                    <div class="flex">
-                        <div class="col-6 mb-3">
-                        <label for="lastName" class="block text-900 font-medium mb-2">Password</label>
-                        <input v-model="password" class="p-inputtext p-component w-full" data-pc-name="inputtext" data-pc-section="root" id="lastName" type="password" placeholder="Password">
-                        </div>
-                        <div class="col-6 mb-3">
-                        <label for="lastName" class="block text-900 font-medium mb-2">Confirm Password</label>
-                        <input v-model="confirm_password" class="p-inputtext p-component w-full" data-pc-name="inputtext" data-pc-section="root" id="lastName" type="text" placeholder="Phone Number">
-                        </div>
-                    </div>
-                    
-                    <button @click="signUp" class="p-button p-component w-full p-3" type="button" aria-label="Sign In" data-pc-name="button" data-pc-section="root" data-pd-ripple="true">
-                        <span class="p-button-icon p-button-icon-left pi pi-user" data-pc-section="icon"></span>
-                        <span class="p-button-label" data-pc-section="label">Sign Up</span>
-                        <span role="presentation" aria-hidden="true" data-p-ink="true" data-p-ink-active="false" class="p-ink" data-pc-name="ripple" data-pc-section="root"></span>
-                    </button>
+    <NuxtLayout name="logins">
+        <div class="form-body on-top-mobile">
+        <div class="website-logo">
+            <a href="index.html">
+                <div class="logo">
+                    <img class="logo-size" src="/logins/images/logo-light.svg" alt="">
                 </div>
-
-            <div class="hidden md:block w-6 bg-no-repeat bg-cover" style="background-image: url(&quot;/images/little-girl-with-colorful-books-table.jpg&quot;);"></div>
+            </a>
+        </div>
+        <div class="row">
+            <div class="img-holder">
+                <div class="bg"></div>
+                <div class="startss">
+                    <a href="index.html">
+                            <img class="logo-size" src="/images/mfundo.svg" alt="">
+                    </a>
+                </div>
+                <div class="info-holder simple-info">
+                    <div><h3>Create Profile & Start Learning!</h3></div>
+                    <div><p>Fill the form, with all the required details to help us tailor make our offering</p></div>
+                    <img src="/logins/images/graphic1.svg" alt="">
+                </div>
+            </div>
+            <div class="form-holder">
+                <div class="form-content">
+                    <div class="form-items">
+                        <div class="page-links">
+                            <a href="#" class="active">Create an Account</a>
+                        </div>
+                        <form>
+                            <div class="row">
+                                <div class="col-12 col-sm-6">
+                                    <InputText v-model="first_name" class="form-control" placeholder="First name"/>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <InputText v-model="last_name" class="form-control" placeholder="Last name"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-sm-6">
+                                    <Calendar v-model="date_of_birth" class="w-12" placeholder="Date of Birth"/>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <DropDown v-model="selectedCountry" :options="countries" filter optionLabel="name" placeholder="Select a Country" class="w-12 mydropdown">
+                                    <template #value="slotProps">
+                                        <div v-if="slotProps.value" class="flex align-items-center">
+                                            <img :alt="slotProps.value.label" src="https://primefaces.org/cdn/primevue/images/flag/flag_placeholder.png" :class="`mr-2 flag flag-${slotProps.value.code.toLowerCase()}`" style="width: 18px" />
+                                            <div>{{ slotProps.value.name }}</div>
+                                        </div>
+                                        <span v-else>
+                                            {{ slotProps.placeholder }}
+                                        </span>
+                                    </template>
+                                    <template #option="slotProps">
+                                        <div class="flex align-items-center">
+                                            <img :alt="slotProps.option.label" src="https://primefaces.org/cdn/primevue/images/flag/flag_placeholder.png" :class="`mr-2 flag flag-${slotProps.option.code.toLowerCase()}`" style="width: 18px" />
+                                            <div>{{ slotProps.option.name }}</div>
+                                        </div>
+                                    </template>
+                                </Dropdown>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-sm-6">
+                                    <input v-model="school" type="text" class="form-control" placeholder="School/Institution">
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <input v-model="grade" type="text" class="form-control" placeholder="Grade">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <input v-model="email" type="email" class="form-control" placeholder="Email Address" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <MazPhoneNumberInput v-model="phone" v-model:country-code="countryCode" show-code-on-list :preferred-countries="['ZW', 'ZA', 'DE', 'US', 'GB']" @update="cell_validation = $event,console.log(cell_validation.isValid)" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-sm-6">
+                                    <Password class="w-12" v-model="password" toggleMask placeholder="Enter Password">
+                                    <template #header>
+                                        <h6>Pick a password</h6>
+                                    </template>
+                                    <template #footer>
+                                        <Divider />
+                                        <p class="mt-2">Suggestions</p>
+                                        <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
+                                            <li>At least one lowercase</li>
+                                            <li>At least one uppercase</li>
+                                            <li>At least one numeric</li>
+                                            <li>Minimum 8 characters</li>
+                                        </ul>
+                                    </template>
+                                </Password>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <Password class="w-12" v-model="confirm_password" placeholder="Confirm Password"/>
+                                </div>
+                            </div>
+                            <div class="row top-padding">
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-button">
+                                        <Button @click="signUp" :disabled="!first_name || !last_name || !date_of_birth || !selectedCountry || !school || !grade || !email || !phone || !password || !confirm_password || cell_validation?.isValid === false" class="ibtn less-padding">Sign Up</Button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
-        </div>
-    </NuxtLayout>
+    </div>
+</NuxtLayout>
 </template>
 <script lang="ts" setup>
-import { storeToRefs } from "pinia";
+import MazPhoneNumberInput from 'maz-ui/components/MazPhoneNumberInput'
 import { useToast } from "primevue/usetoast";
 import { useAuthStore } from "~/stores/auth";
 const authStore = useAuthStore()
 const toast = useToast()
 import countriesData from '~/json/countries.json';
 const selectedCountry = ref();
+const countryCode = ref();
+const cell_validation = ref()
 const first_name = ref()
 const last_name = ref()
 const date_of_birth = ref()
@@ -139,22 +166,59 @@ const signUp = async () => {
 }
 </script>
 <style>
-.surface-section.w-full.md\:w-6.p-6.md\:p-8 {
-    height: 100vh;
+img.logo-size {
+    width: auto !important;
+    float: left !important;
+    height: 60px !important;
+    padding-left: 7px !important;
+    margin-bottom: 26px !important;
 }
-.p-input-icon-right > .p-inputtext {
-    padding-right: 2.5rem;
+.form-content .form-items {
+    max-width: 616px !important;
+    text-align: left;
+}
+.img-holder .info-holder.simple-info img {
+    max-width: 288px !important;
+    margin-bottom: 50px;
+    /* float: left; */
+}
+.form-content input, .form-content .dropdown-toggle.btn-default {
+    border: 0;
+    border: 1px solid #C3C3C3 !important;
+    /* background-color: #fff; */
+    /* color: #000; */
+    background-color: #fff !important;
+    color: #8D8D8D;
+}
+.form-content {
+    background-color: white !important;
+}
+.p-dropdown {
+    background: #ffffff;
+    border: 1px solid #ced4da;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+    height: 43px !important;
+    border-radius: 6px;
+}
+.p-dropdown .p-dropdown-label.p-placeholder {
+    color: #7a88a4 !important;
+    font-size: 15px !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-weight: 300 !important;
+}
+.form-content input, .form-content .dropdown-toggle.btn-default {
     width: 100%;
-    height: 50px;
-}
-.p-input-icon-right > .p-inputtext {
-    padding-right: 2.5rem;
-    width: 515px;
-}
-input.p-inputtext.p-component {
-    width: 100% !important;
-}
-.p-input-icon-right > .p-inputtext {
-    padding-right: 218px !important;
+    padding: 9px 20px;
+    text-align: left;
+    border: 0;
+    outline: 0;
+    border-radius: 6px;
+    background-color: #fff;
+    font-size: 15px;
+    font-weight: 300;
+    color: #8D8D8D;
+    -webkit-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    margin-bottom: 0px !important;
 }
 </style>
