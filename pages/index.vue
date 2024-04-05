@@ -363,7 +363,7 @@
 
 
         <!-- ~~~ Footer Section ~~~ -->
-        <footer class="bg_img mt-80" data-img="./assets/images/footer/footer-bg.jpg">
+        <footer class="bg_img mt-80" data-img="/assets/images/footer/footer-bg.jpg">
             <div class="footer-support">
                 <div class="container">
                     <div class="row justify-content-center">
@@ -405,10 +405,10 @@
             </div>
             <div class="footer-section oh pos-rel">
                 <div class="course-top-shape">
-                    <img src="./assets/images/course/course-top-shape.png" alt="course">
+                    <img src="/assets/images/course/course-top-shape.png" alt="course">
                 </div>
                 <div class="course-bottom-shape">
-                    <img src="./assets/images/course/course-bottom-shape.png" alt="course">
+                    <img src="/assets/images/course/course-bottom-shape.png" alt="course">
                 </div>
                 <div class="container">
                     <div class="footer-top">
@@ -511,7 +511,7 @@
                             <div class="col-md-4">
                                 <div class="thumb">
                                     <a href="./index.html">
-                                        <img src="./assets/images/footer/footer-bottom.png" alt="footer">
+                                        <img src="/assets/images/footer/footer-bottom.png" alt="footer">
                                     </a>
                                 </div>
                             </div>
