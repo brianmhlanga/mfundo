@@ -697,5 +697,12 @@ a.custom-buttonn {
     border: 1px solid #3ec3ab;
     margin-right: 6px;
 }
+a.custom-button.btn-md.theme-one {
+    background-color: #3ec3ab !important;
+    border-color: #0c0c0c !important;
+}
+a.custom-button.btn-md.theme-one:hover {
+    color: white !important;
+}
 
 </style>
