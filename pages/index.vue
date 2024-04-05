@@ -15,21 +15,13 @@
             <div class="custom-container">
                 <div class="header-area">
                     <div class="logo">
-                        <a href="./index.html">
+                        <NuxtLink to="/">
                             <img src="/images/mfundo.svg" alt="logo">
-                        </a>
+                        </NuxtLink>
                     </div>
                     <ul class="menu d-none d-lg-flex flex-wrap">
                         <li>
-                            <a href="#0">Home</a>
-                            <ul class="submenu">
-                                <li>
-                                    <a href="./index.html">Home 1</a>
-                                </li>
-                                <li>
-                                    <a href="./index-2.html">Home 2</a>
-                                </li>
-                            </ul>
+                            <NuxtLink to="/">Home</NuxtLink>
                         </li>
                         <li>
                             <a href="./about.vue">About Us</a>
