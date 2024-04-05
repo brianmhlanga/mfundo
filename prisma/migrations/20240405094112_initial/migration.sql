@@ -38,7 +38,6 @@ CREATE TABLE `Student` (
     `grade` VARCHAR(191) NULL,
     `profile` ENUM('ADMIN', 'STUDENT') NOT NULL DEFAULT 'STUDENT',
     `password` VARCHAR(191) NULL,
-    `salt` VARCHAR(191) NULL,
     `current_logged_in_at` DATETIME(3) NULL,
     `last_logged_in_at` DATETIME(3) NULL,
 
@@ -49,58 +48,55 @@ CREATE TABLE `Student` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `Applications` (
-    `id` VARCHAR(191) NOT NULL,
-    `exam_status` BOOLEAN NULL DEFAULT false,
-    `postingId` VARCHAR(191) NULL,
-    `applicantId` VARCHAR(191) NULL,
-    `status` ENUM('NOT_TAKEN', 'PASS', 'FAILED') NOT NULL DEFAULT 'NOT_TAKEN',
-
-    UNIQUE INDEX `Applications_id_key`(`id`),
-    PRIMARY KEY (`id`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
--- CreateTable
 CREATE TABLE `Subject` (
     `id` VARCHAR(191) NOT NULL,
     `name` VARCHAR(191) NULL,
     `description` VARCHAR(10000) NULL,
     `status` ENUM('OPEN', 'CLOSED', 'DRAFT') NOT NULL DEFAULT 'OPEN',
-    `views` INTEGER NULL,
-    `exam_taken` BOOLEAN NULL DEFAULT false,
 
     UNIQUE INDEX `Subject_id_key`(`id`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `Questionaire` (
+CREATE TABLE `Exam` (
     `id` VARCHAR(191) NOT NULL,
-    `postingId` VARCHAR(191) NOT NULL,
-    `question_type` VARCHAR(191) NOT NULL,
-    `options` JSON NULL,
-    `score` INTEGER NULL,
+    `exam_name` VARCHAR(191) NOT NULL,
+    `subject_id` VARCHAR(191) NOT NULL,
+    `exam_hours` INTEGER NOT NULL DEFAULT 0,
+    `exam_minutes` INTEGER NOT NULL DEFAULT 59,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-    `created_by_name` VARCHAR(191) NULL,
-    `created_by_id` INTEGER NULL,
-    `boolean_answer` BOOLEAN NULL,
-    `multichoice_answer` VARCHAR(191) NULL,
-    `applicant_id` VARCHAR(191) NULL,
-    `question` VARCHAR(10000) NOT NULL,
-    `student_boolean_answer` BOOLEAN NULL,
-    `student_multichoice_answer` VARCHAR(191) NULL,
-    `student_unstructured_answer` VARCHAR(191) NULL,
-    `correct` BOOLEAN NULL DEFAULT false,
+    `updated_at` DATETIME(3) NOT NULL,
 
-    INDEX `Questionaire_postingId_fkey`(`postingId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `QuestionaireAnswers` (
+CREATE TABLE `Questions` (
     `id` VARCHAR(191) NOT NULL,
-    `postingId` VARCHAR(191) NOT NULL,
+    `question_type` VARCHAR(191) NOT NULL,
+    `options` JSON NULL,
+    `score` INTEGER NULL,
+    `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `created_by_name` VARCHAR(191) NULL,
+    `created_by_id` INTEGER NULL,
+    `boolean_answer` BOOLEAN NULL,
+    `multichoice_answer` VARCHAR(191) NULL,
     `question` VARCHAR(10000) NOT NULL,
+    `student_boolean_answer` BOOLEAN NULL,
+    `student_multichoice_answer` VARCHAR(191) NULL,
+    `student_unstructured_answer` VARCHAR(191) NULL,
+    `exam_id` VARCHAR(191) NOT NULL,
+    `correct` BOOLEAN NULL DEFAULT false,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `QuestionAnswers` (
+    `id` VARCHAR(191) NOT NULL,
+    `question` VARCHAR(10000) NOT NULL,
+    `question_id` VARCHAR(191) NOT NULL,
     `question_type` VARCHAR(191) NOT NULL,
     `multichoice_answer` VARCHAR(191) NULL,
     `boolean_answer` BOOLEAN NULL,
@@ -108,16 +104,28 @@ CREATE TABLE `QuestionaireAnswers` (
     `score` INTEGER NULL,
     `student_boolean_answer` BOOLEAN NULL,
     `student_multichoice_answer` VARCHAR(191) NULL,
+    `student_id` VARCHAR(191) NOT NULL,
     `student_unstructured_answer` VARCHAR(191) NULL,
+    `exam_id` VARCHAR(191) NOT NULL,
     `correct` BOOLEAN NULL DEFAULT false,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `created_by_name` VARCHAR(191) NULL,
     `created_by_id` INTEGER NULL,
-    `applicant_id` VARCHAR(191) NULL,
-    `id_primary` VARCHAR(191) NOT NULL,
 
-    INDEX `QuestionaireAnswers_postingId_fkey`(`postingId`),
-    PRIMARY KEY (`id_primary`)
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `Time` (
+    `id` VARCHAR(191) NOT NULL,
+    `student_id` VARCHAR(191) NOT NULL,
+    `exam_id` VARCHAR(191) NOT NULL,
+    `hours` INTEGER NOT NULL,
+    `minutes` INTEGER NOT NULL,
+    `seconds` INTEGER NOT NULL,
+    `updated_at` DATETIME(3) NOT NULL,
+
+    PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
@@ -131,13 +139,22 @@ CREATE TABLE `Attachments` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- AddForeignKey
-ALTER TABLE `Applications` ADD CONSTRAINT `Applications_postingId_fkey` FOREIGN KEY (`postingId`) REFERENCES `Subject`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `Exam` ADD CONSTRAINT `Exam_subject_id_fkey` FOREIGN KEY (`subject_id`) REFERENCES `Subject`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Applications` ADD CONSTRAINT `Applications_applicantId_fkey` FOREIGN KEY (`applicantId`) REFERENCES `Student`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `Questions` ADD CONSTRAINT `Questions_exam_id_fkey` FOREIGN KEY (`exam_id`) REFERENCES `Exam`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Questionaire` ADD CONSTRAINT `Questionaire_postingId_fkey` FOREIGN KEY (`postingId`) REFERENCES `Subject`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `QuestionAnswers` ADD CONSTRAINT `QuestionAnswers_question_id_fkey` FOREIGN KEY (`question_id`) REFERENCES `Questions`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `QuestionaireAnswers` ADD CONSTRAINT `QuestionaireAnswers_postingId_fkey` FOREIGN KEY (`postingId`) REFERENCES `Subject`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `QuestionAnswers` ADD CONSTRAINT `QuestionAnswers_student_id_fkey` FOREIGN KEY (`student_id`) REFERENCES `Student`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `QuestionAnswers` ADD CONSTRAINT `QuestionAnswers_exam_id_fkey` FOREIGN KEY (`exam_id`) REFERENCES `Exam`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Time` ADD CONSTRAINT `Time_student_id_fkey` FOREIGN KEY (`student_id`) REFERENCES `Student`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Time` ADD CONSTRAINT `Time_exam_id_fkey` FOREIGN KEY (`exam_id`) REFERENCES `Exam`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
