@@ -89,8 +89,18 @@
             <!---->
             <span role="presentation" aria-hidden="true" data-p-ink="true" data-p-ink-active="false" class="p-ink" data-pc-name="ripple" data-pc-section="root"></span>
         </button>
-        <Button v-if="profile === 'ADMIN'" @click="navigateTo('/admin/dashboard')" label="Admin Dashboard" />
-        <Button class="logout" @click="logOut" label="Log Out"/>
+        <button v-if="profile ? profile === 'ADMIN' : false" @click="navigateTo('/admin/dashboard')" class="p-button p-component p-button-text font-bold h-full homelog" type="button" aria-label="Login" data-pc-name="button" data-pc-section="root" data-pd-ripple="true" style="border-radius: 0px;">
+            <!---->
+            <span class="p-button-label" data-pc-section="label">Admin Dashboard</span>
+            <!---->
+            <span role="presentation" aria-hidden="true" data-p-ink="true" data-p-ink-active="false" class="p-ink" data-pc-name="ripple" data-pc-section="root"></span>
+        </button>
+        <button  @click="navigateTo('/register')" class="p-button p-component ml-3 font-bold h-full" type="button" aria-label="Register" data-pc-name="button" data-pc-section="root" data-pd-ripple="true" style="border-radius: 0px;">
+            <!---->
+            <span class="p-button-label" data-pc-section="label">Log Out</span>
+            <!---->
+            <span role="presentation" aria-hidden="true" data-p-ink="true" data-p-ink-active="false" class="p-ink" data-pc-name="ripple" data-pc-section="root"></span>
+        </button>
         </div>
         <div v-else class="flex justify-content-between lg:block border-top-1 lg:border-top-none surface-border py-3 lg:py-0 px-6 lg:px-0 mt-3 lg:mt-0">
         <button @click="navigateTo('/login')" class="p-button p-component p-button-text font-bold h-full homelog" type="button" aria-label="Login" data-pc-name="button" data-pc-section="root" data-pd-ripple="true" style="border-radius: 0px;">
@@ -115,7 +125,18 @@ import { useToast } from "primevue/usetoast";
 import { useAuthStore } from "~/stores/auth";
 const authStore = useAuthStore()
 //@ts-ignore
-const { value: { first_name, last_name, profile, id }} = useCookie('user');
+const last_name = ref()
+const first_name = ref()
+const profile = ref()
+const id = ref()
+onMounted(() => {
+    let userData:any = useCookie('user').value
+    first_name.value = userData?.first_name
+    last_name.value = userData?.last_name
+    profile.value = userData?.profile
+    id.value = userData?.id
+})
+// const { value: { first_name, last_name, profile, id }} = useCookie('user');
 const logOut = async () => {
     let result = await authStore.logout()
 }

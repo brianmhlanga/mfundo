@@ -409,10 +409,6 @@ export const useExamsStore = defineStore('exams', {
                   success: false
                }
             });
-            let   myapplications = result.data
-                  console.log("my applications")
-                  console.log(myapplications.postingApplications)
-                  this.applicationsList = myapplications.postingApplications
                   
             return result;
          },

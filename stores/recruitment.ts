@@ -716,7 +716,7 @@ export const useRecruitmentStore = defineStore('recruitment', {
          
             var config = { 
                 method: 'post',
-                url: '/recruitment/exams/create',
+                url: '/exams/create',
                 headers: { 
                     'Content-Type': 'application/json'
                 },

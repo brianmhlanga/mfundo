@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2901.45 814.98">
+  <defs>
+    <style>
+      .cls-1 {
+        font-family: HelveticaRounded-Bold, 'Helvetica Rounded';
+        font-size: 514.34px;
+        font-weight: 700;
+      }
+
+      .cls-2 {
+        fill: #634bff;
+      }
+
+      .cls-3 {
+        fill: #3ec3ab;
+      }
+
+      .cls-4 {
+        fill: #0071f2;
+      }
+    </style>
+  </defs>
+  <text class="cls-1" transform="translate(918.94 599.8)"><tspan x="0" y="0">Mfundo</tspan></text>
+  <g>
+    <rect class="cls-4" x="218.11" y="120.39" width="581.68" height="165.67" rx="82.84" ry="82.84" transform="translate(-32.32 117.47) rotate(-12.76)"/>
+    <rect class="cls-2" x="225.57" y="367.77" width="581.68" height="165.67" rx="82.84" ry="82.84"/>
+    <rect class="cls-3" x="225.57" y="574.89" width="581.68" height="165.67" rx="82.84" ry="82.84"/>
+  </g>
+</svg>

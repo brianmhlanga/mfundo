@@ -59,7 +59,7 @@
                     <!---->
                     <span role="presentation" aria-hidden="true" data-p-ink="true" data-p-ink-active="false" class="p-ink" data-pc-name="ripple" data-pc-section="root"></span>
                 </button>
-                <button @click="navigateTo(`/takeExam-${exam.id}-${id}`)" class="p-button p-component p-button-outlined p-button-secondary w-6 ml-2" type="button" aria-label="Follow" data-pc-name="button" data-pc-section="root" data-pd-ripple="true">
+                <button @click="checkSignedIn(exam?.id)" class="p-button p-component p-button-outlined p-button-secondary w-6 ml-2" type="button" aria-label="Follow" data-pc-name="button" data-pc-section="root" data-pd-ripple="true">
                     <span class="p-button-icon p-button-icon-left pi pi-pencil" data-pc-section="icon"></span>
                     <span class="p-button-label" data-pc-section="label">Exam</span>
                     <!---->
@@ -74,16 +74,29 @@
     </div>
 </template>
 <script lang="ts" setup>
+import { useToast } from 'primevue/usetoast';
 import { useExamsStore } from '~/stores/exams';
+const toast = useToast()
 const exams = ref()
 let examsStore = useExamsStore()
+const id = ref()
 //@ts-ignore
-const { value: { first_name, last_name, profile, id }} = useCookie('user');
+// const { value: { id }} = useCookie('user');
 onMounted( async() => {
+    let userData:any = useCookie('user').value
+    id.value = userData?.id
     let result = await examsStore.getExams().then((data) => {
       exams.value = data?.data?.exams
     })
 })
+const checkSignedIn = (examId) => {
+  if(id.value) {
+    navigateTo(`/takeExam-${examId}-${id.value}`)
+  }
+  else {
+    toast.add({ severity: 'info', summary: 'Not Authenticated', detail: 'Please login, to take exam',life: 3000});
+  }
+}
 </script>
 <style>
 .custom-shadow-2 {

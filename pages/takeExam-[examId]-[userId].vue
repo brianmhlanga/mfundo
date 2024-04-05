@@ -183,6 +183,7 @@ let startCountdown = async (hrs, mins, secs) => {
         if (totalSeconds.value <= 0) {
             clearInterval(intervalId);
             console.log("exam over")
+            await submitOnTimeOut()
             return;
         }
 
@@ -226,6 +227,34 @@ const submitSolutions =  async () => {
             })
             
 };
+const submitOnTimeOut =  async () => {
+            let data = {
+                questionList: await addStudentId(exam?.value?.questions)
+            }
+            let result =  await examsStore.saveAnswers(data).then((data) => {
+                total_questions.value = data?.data?.total
+                correct_questions.value = data?.data?.correct
+                pass_percentage.value = (((correct_questions.value/total_questions.value)*100).toFixed(2))
+                resultModal.value = true
+                if(data?.data?.success){
+                    toast.add({severity: 'success', summary: 'Success', detail: 'Exam Succesfully Completed', life: 3000});
+                }else{
+                   Swal.fire({
+                    title: 'Error!',
+                    text: data?.data?.message,
+                    icon: 'error',
+                    confirmButtonText: 'Try Again'
+                    })
+                }
+            })
+            
+};
+const  addStudentId = (objects) => {
+  return objects.map(obj => {
+    obj.student_id = userId;
+    return obj;
+  });
+}
 
 onMounted(async () => {
     let data = {
