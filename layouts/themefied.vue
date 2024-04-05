@@ -93,7 +93,7 @@
     /* color: #7884A7; */
     line-height: 28px;
     overflow-x: clip !important;
-    font-family: 'Mulish', sans-serif;
-    background: #fff;
+    font-family: Poppins, sans-serif;
+    background: #edf2f9;
 }
   </style>
