@@ -474,8 +474,6 @@ export const useExamsStore = defineStore('exams', {
                }
             });
             let   myapplications = result.data
-                  console.log("my applications")
-                  console.log(myapplications.postingApplications)
                   this.applicationsList = myapplications.postingApplications
                   
             return result;
@@ -489,6 +487,35 @@ export const useExamsStore = defineStore('exams', {
             const config = { 
                method: 'post',
                url: '/exams/storeTime',
+               headers: { 
+                  'Content-Type': 'application/json'
+               },
+               data: data
+            }; 
+            
+            const result: any = await axios(config).then(function (response) {
+               return {
+                  data: response.data,
+                  success: true
+               }
+            }).catch(function (error) {
+               console.log(error);
+   
+               return {
+                  success: false
+               }
+            });
+            return result;
+         },
+         async deleteTime(arg){
+
+            var data = JSON.stringify({
+               "data" : arg,
+              });
+   
+            const config = { 
+               method: 'post',
+               url: '/exams/deleteTime',
                headers: { 
                   'Content-Type': 'application/json'
                },
