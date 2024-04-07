@@ -21,7 +21,12 @@
       
           <!-- ========== section start ========== -->
           <body>
-            <slot/>
+            <div class="all-sections">
+              <landing-home/>
+              <slot/>
+              <landing-footer/>
+            </div>
+        
           </body>
   
           <!-- ========== footer start =========== -->
