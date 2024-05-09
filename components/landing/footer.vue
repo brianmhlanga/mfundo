@@ -49,113 +49,12 @@
                 <div class="container">
                     <div class="footer-top">
                         <div class="footer-area">
-                            <div class="footer-widget widget-link">
-                                <h5 class="title">Talk to Us</h5>
-                                <ul>
-                                    <li>
-                                        <a href="#0">About us</a>
-                                    </li>
-                                    <li>
-                                        <a href="#0">Registration</a>
-                                    </li>
-                                    <li>
-                                        <a href="#0">Blog</a>
-                                    </li>
-                                    <li>
-                                        <a href="#0">Events</a>
-                                    </li>
-                                    <li>
-                                        <a href="#0">Contact</a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="footer-widget widget-link">
-                                <h5 class="title">Information</h5>
-                                <ul>
-                                    <li>
-                                        <a href="#0">Membership</a>
-                                    </li>
-                                    <li>
-                                        <a href="#0">Purchase guide</a>
-                                    </li>
-                                    <li>
-                                        <a href="#0">Privacy policy</a>
-                                    </li>
-                                    <li>
-                                        <a href="#0">Terms of service</a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="footer-widget widget-link">
-                                <h5 class="title">Support</h5>
-                                <ul>
-                                    <li>
-                                        <a href="#0">Documentation</a>
-                                    </li>
-                                    <li>
-                                        <a href="#0">FAQs</a>
-                                    </li>
-                                    <li>
-                                        <a href="#0">Condition</a>
-                                    </li>
-                                    <li>
-                                        <a href="#0">Release Status</a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="footer-widget widget-info">
-                                <h5 class="title">Contact Us</h5>
-                                <ul>
-                                    <li>
-                                        <div class="icon">
-                                            <i class="fas fa-map-marker-alt"></i>
-                                        </div>
-                                        <div class="content">
-                                            <span>12/A, Hamilton City Way, Newyork, US</span>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="icon">
-                                            <i class="fas fa-phone-alt"></i>
-                                        </div>
-                                        <div class="content">
-                                            <a href="Tel:+880551251558">+8987 5675 754 6</a>
-                                            <a href="Tel:+880551251558">+8987 5675 754 6</a>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="icon">
-                                            <i class="fas fa-envelope-open-text"></i>
-                                        </div>
-                                        <div class="content">
-                                            <a href="Mailto:info@exampleweb.com">info@exampleweb.com</a>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="footer-bottom">
-                        <div class="row align-items-center">
-                            <div class="col-md-8">
-                                <h5 class="title">Subscribe Newsletter</h5>
-                                <form class="footer-subscribe-form">
-                                    <input type="text" placeholder="Enter Your Email" name="email">
-                                    <button type="submit">Subscribe Now</button>
-                                </form>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="thumb">
-                                    <NuxtLink to="/">
-                                        <img src="/images/mfundo.svg" alt="logo">
-                                    </NuxtLink>
-                                </div>
-                            </div>
+                        
                         </div>
                     </div>
                     <div class="copyright-area">
                         <div class="left">
-                            <p>&copy; Copyright 2023. All Rights Reserved.</p>
+                            <p>&copy; Copyright 2024. All Rights Reserved.</p>
                         </div>
                         <div class="right">
                             <ul class="social-icons">

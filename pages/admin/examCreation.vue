@@ -12,10 +12,6 @@
                     <InputText v-model="exam_name" placeholder="Exam Name e.g History Grade 5" class="w-full md:w-col-12" />
                     </div>
                     <div class="field mb-4 col-12">
-                    <label for="nickname2" class="font-medium text-900">Subject</label>
-                    <DropDown v-model="selectedSubject"  optionLabel="name" optionValue="id" :options="subjects" placeholder="Select Subject" class="w-full md:w-14rem" />
-                    </div>
-                    <div class="field mb-4 col-12">
                     <label for="nickname2" class="font-medium text-900">Test Time</label>
                     <InputGroup>
                         <InputGroupAddon class="tect">Hours</InputGroupAddon>
@@ -23,10 +19,13 @@
                         <InputGroupAddon class="tect">Minutes</InputGroupAddon>
                         <InputNumber v-model="minutes" :min="0" :max="59" />
                     </InputGroup>
-                    
+                    </div>
+                    <div class="field mb-4 col-12">
+                    <label for="nickname2" class="font-medium text-900">Subject</label>
+                        <DropDown v-model="selectedSubject"  optionLabel="name" optionValue="id" :options="subjects" placeholder="Select Subject" class="w-full md:w-14rem" />
                     </div>
                     <div class="mb-4 col-3">
-                        <Button @click="createQuestionModal = true" class="mb-5" label="Create Question" icon="pi pi-plus" />
+                        <Button @click="createQuestionModal = true" :disabled="!exam_name || !selectedSubject || !hours&&!minutes" class="mb-5" label="Create Question" icon="pi pi-plus" />
                     </div>
                         <Panel class="col-12 mb-5" v-for="(question, index) in questions">
                             <template #header>
@@ -56,7 +55,7 @@
                             </p>
                         </Panel>
                         <div class="mb-4 col-3">
-                        <Button @click="createExam()" class="mb-5" label="Create Exam" icon="pi pi-file" />
+                        <Button :disabled="questions.length < 1  || !exam_name || !selectedSubject || !hours&&!minutes" @click="createExam()" class="mb-5" label="Create Exam" icon="pi pi-file" />
                     </div>
                     </div>
                 </div>
@@ -68,7 +67,7 @@
         <div class="grid formgrid p-fluid">
                     <div class="field mb-4 col-12">
                     <label for="nickname2" class="font-medium text-900">Question</label>
-                    <Editor v-model="question" editorStyle="height: 200px"/>
+                    <Editor v-model="question"/>
                     </div>
                     <div class="surface-border border-top-1 opacity-50 mb-3 col-12"></div>
                     <div v-if="question_type === 'MultiChoice'" class="field mb-4 col-12 md:col-12">
@@ -94,7 +93,7 @@
                     </div>
                     </div>
                     <div class="mb-4 col-12">
-                        <Button @click="pushToQuestions()" class="mb-5" label="Add Question" icon="pi pi-plus" />
+                        <Button @click="pushToQuestions()" :disabled="!multichoice_options || !multichoice_answer " class="mb-5" label="Add Question" icon="pi pi-plus" />
                     </div>
                     
                     <div class="surface-border border-top-1 opacity-50 mb-3 col-12"></div>
@@ -107,6 +106,7 @@
 <script setup lang="ts">
     import {useRecruitmentStore} from "~/stores/recruitment"
     import { storeToRefs } from "pinia";
+    import Quill from "quill";
     import Swal from 'sweetalert2';
     import { useToast } from 'primevue/usetoast';
     import { useManagementStore } from "~/stores/management";
@@ -361,6 +361,11 @@
 .bg-color {
     background-color: #26cb16 !important;
     color: white !important;
+}
+.p-panel-content img {
+    height: 210px;
+    width: auto;
+    margin: auto;
 }
 </style>
 <style scoped>

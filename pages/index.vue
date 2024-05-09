@@ -51,8 +51,7 @@
                                 </div>
                                 
                                 <div class="ratings-area col-12">
-                                    <Button class="custom-button theme-one rounded" label="History"></Button>
-                                    <Button @click="checkSignedIn(exam?.id)" class="custom-button theme-one rounded" label="Take Exam"></Button>
+                                    <Button @click="checkSignedIn(exam?.id)" class="custom-button theme-one rounded w-12" label="Take Exam"></Button>
                                 </div>
                             </div>
                         </div>

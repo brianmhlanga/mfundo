@@ -1,166 +1,26 @@
 <template>
-    <div class="overlayer"></div>
-
-<span class="go-top">
-    <i class="fas fa-angle-up"></i>
-</span>
-<!-- ~~~ Loader & Go-Top ~~~ -->
-
-
-<!-- ~~~ Header Section ~~~ -->
-<header>
-    <div class="custom-container">
-        <div class="header-area">
-            <div class="logo">
-                <NuxtLink to="/">
-                    <img src="/images/mfundo.svg" alt="logo">
-                </NuxtLink>
-            </div>
-            <ul class="menu d-none d-lg-flex flex-wrap">
-                <li>
-                    <NuxtLink to="/">Home</NuxtLink>
-                </li>
-                <li>
-                    <a href="/about">About Us</a>
-                </li>
-                <li>
-                    <a href="/exams">Quizzes</a>
-                </li>
-                <li>
-                    <a href="contact.html">Contact</a>
-                </li>
-            </ul>
-            <div class="header-bar ml-4">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            <!-- <form class="course-search-form ml-auto mr-4">
-                        <input type="text" name="name" placeholder="Search Courses" class="rounded">
-                        <button type="submit" class="rounded"><i class="flaticon-loupe"></i></button>
-            </form> -->
-            <span v-if="first_name" class="mr-2">Hi, {{first_name}} {{ last_name }}</span>
-            <NuxtLink  v-if="profile ? profile === 'ADMIN' : false" to="/admin/dashboard" class="custom-buttonn"><span>Admin</span></NuxtLink>
-            <NuxtLink v-if="first_name" @click="logOut" class="custom-button"><span>Log Out</span></NuxtLink>
-            <div v-else>
-            <NuxtLink  to="/login" class="custom-buttonn"><span>Log In</span></NuxtLink>
-            <NuxtLink to="/register" class="custom-button"><span>Sign Up</span></NuxtLink>
-            </div>
-           
-        </div>
-    </div>
-</header>
-<!-- ~~~ Header Section ~~~ -->
-
-<!-- ~~~ Mobile Menu ~~~ -->
-<div class="mobile-menu">
-    <span class="close-mobile-menu">
-        <i class="fas fa-times"></i>
-    </span>
-    <div class="w-100 d-flex flex-wrap justify-content-center align-items-center">
-        <form class="course-search-form mr-sm-4">
-            <select class="select-bar rounded">
-                <option value="01">Category</option>
-                <option value="02">Physics</option>
-                <option value="03">Chemistry</option>
-                <option value="04">History</option>
-                <option value="05">Geometry</option>
-                <option value="06">LoremIp</option>
-                <option value="07">UI/UX</option>
-                <option value="08">Laravel</option>
-            </select>
-            <input type="text" name="name" placeholder="Search Courses" class="rounded">
-            <button type="submit" class="rounded"><i class="flaticon-loupe"></i></button>
-        </form>
-        <a href="#0" class="custom-button"><i class="fas fa-user"></i><span>Sign Up</span></a>
-        <div class="w-100 d-lg-none">
-            <ul class="menu">
-                <li>
-                    <a href="#0">Home</a>
-                    <ul class="submenu">
+    <NuxtLayout name="inside">
+        <section class="hero-section banner-overlay bg_img" data-img="./assets/images/banner/banner-bg.jpg">
+            
+            <div class="custom-container">
+                <div class="hero-content">
+                    <h1 class="title uppercase cl-white">About Us</h1>
+                    <ul class="breadcrumb cl-white p-0 m-0">
                         <li>
-                            <a href="./index.html">Home 1</a>
+                            <a href="/">Home</a>
                         </li>
                         <li>
-                            <a href="./index-2.html">Home 2</a>
+                            about us
                         </li>
                     </ul>
-                </li>
-                <li>
-                    <a href="./about.html">About Us</a>
-                </li>
-                <li>
-                    <a href="#0">Courses</a>
-                    <ul class="submenu">
-                        <li>
-                            <a href="./courses.html">Courses</a>
-                        </li>
-                        <li>
-                            <a href="./course-details.html">Course Details</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#0">Pages</a>
-                    <ul class="submenu">
-                        <li>
-                            <a href="./instructor.html">Instructor</a>
-                        </li>
-                        <li>
-                            <a href="./gallery.html">Gallery</a>
-                        </li>
-                        <li>
-                            <a href="./events.html">Event</a>
-                        </li>
-                        <li>
-                            <a href="./upcoming-events.html">Upcoming Events</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#0">Blog</a>
-                    <ul class="submenu">
-                        <li>
-                            <a href="./blog.html">Blogs</a>
-                        </li>
-                        <li>
-                            <a href="./blog-details.html">Blog Details</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="contact.html">Contact</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</div>
-<!-- ~~~ Mobile Menu ~~~ -->
-
-
-<!-- ~~~ Banner Section ~~~ -->
-<section class="banner-section banner-overlay bg_img" data-img="./assets/images/banner/banner-bg.jpg">
-    <div class="container">
-        <div class="banner-content cl-white">
-            <h1 class="titlee">Powerful Online Quiz and Exams Solution</h1>
-            <p class=minidescription>Create, send and analyze your tests, quizzes and assessments for free with Mfundo</p>
-            <div class="banner-button-area">
-                <NuxtLink to="#courses" class="custom-button btn-md"><span>View courses</span><i class="fas fa-play-circle"></i></NuxtLink>
-                <NuxtLink to="/register" class="custom-button btn-md theme-one"><span>Register now</span><i class="flaticon-tap-1"></i></NuxtLink>
+                </div>
             </div>
-        </div>
-    </div>
-    <div class="banner-thumb">
-        <div class="rounded-shape shape-1"></div>
-        <div class="rounded-shape shape-2"></div>
-        <div class="rounded-shape shape-3"></div>
-    </div>
-</section>
-<!-- ~~~ Banner Section ~~~ -->
+        </section>
+        <!-- ~~~ Hero Section ~~~ -->
 
 
-<!-- ~~~ Feature Section ~~~ -->
-<section class="feature-section pt-120 pb-120">
+        <!-- ~~~ Course Section ~~~ -->
+        <section class="feature-section pt-120 pb-120">
             <div class="container">
                 <div class="section-header">
                     <span class="category">Features</span>
@@ -218,6 +78,32 @@
                 </div>
             </div>
         </section>
+
+        <section class="about-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 align-self-end d-none d-lg-block">
+                        <div class="about-thumb rtl">
+                            <img src="/images/similey.png" alt="about">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 pb-120">
+                        <div class="section-header text-lg-left mb-0">
+                            <h2 class="title">About Mfundo</h2>
+                            <p>Mfundo is Your premier destination for comprehensive and reliable practice exams. Our mission is to empower learners and professionals alike to achieve their academic and career goals through effective test preparation.</p>
+                            <h2 class="minor">Our Vision</h2>
+                            <p>At Mfundo, we believe that the right preparation is the key to success. We envision a world where every student has access to the resources they need to excel in their exams and move confidently towards their future aspirations.</p>
+                            <h2 class="minor">Our Approach</h2>
+                            <p>We have a student-focused approach and strive to give as study content to help you make sure you’ve crossed all your t’s. Mfundo offers an extensive library of practice exams across a wide range of subjects and certifications. Our tests are meticulously crafted by experts to mirror the format and difficulty of actual exams, providing a realistic and challenging practice environment.</p>
+                            <h2 class="minor">Our Commitment</h2>
+                            <p>We are committed to providing an exceptional learning experience that is both affordable and effective. Whether you're a student preparing for college entrance exams or a professional seeking certification, Mfundo is here to support you every step of the way.Join us at Mfundo, where your success is our priority. Let's embark on this journey together and unlock your full potential.Start Practicing Today</p>
+                            <a href="#0" class="custom-button theme-one">get in touch</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </NuxtLayout>
 </template>
 <script lang="ts" setup>
 import { useToast } from 'primevue/usetoast';
@@ -281,6 +167,9 @@ a.custom-button {
     border-radius: 25px;
     border: 1px solid #0071f2;
 }
+.about-thumb.rtl {
+    margin-bottom: 285px;
+}
 .banner-overlay::before {
     left: 0;
     bottom: 0;
@@ -290,6 +179,9 @@ a.custom-button {
 }
 .banner-section {
     padding: 113px 0 105px !important;
+}
+h2.minor {
+    font-size: 20px;
 }
 h1.titlee {
     font-family: Poppins, sans-serif;

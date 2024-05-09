@@ -446,6 +446,108 @@ export const useExamsStore = defineStore('exams', {
                   
             return result;
          },
+         async takeExam(arg){
+
+            var data = JSON.stringify({
+               "data" : arg,
+              });
+   
+            const config = { 
+               method: 'post',
+               url: '/exams/take',
+               headers: { 
+                  'Content-Type': 'application/json'
+               },
+               data: data
+            }; 
+            
+            const result: any = await axios(config).then(function (response) {
+               return {
+                  data: response.data,
+                  success: true
+               }
+            }).catch(function (error) {
+               console.log(error);
+   
+               return {
+                  success: false
+               }
+            });
+            let   myapplications = result.data
+                  console.log("my applications")
+                  console.log(myapplications.postingApplications)
+                  this.applicationsList = myapplications.postingApplications
+                  
+            return result;
+         },
+         async reviewExam(arg){
+
+            var data = JSON.stringify({
+               "data" : arg,
+              });
+   
+            const config = { 
+               method: 'post',
+               url: '/exams/review',
+               headers: { 
+                  'Content-Type': 'application/json'
+               },
+               data: data
+            }; 
+            
+            const result: any = await axios(config).then(function (response) {
+               return {
+                  data: response.data,
+                  success: true
+               }
+            }).catch(function (error) {
+               console.log(error);
+   
+               return {
+                  success: false
+               }
+            });
+            let   myapplications = result.data
+                  console.log("my applications")
+                  console.log(myapplications.postingApplications)
+                  this.applicationsList = myapplications.postingApplications
+                  
+            return result;
+         },
+         async getExamParticipants(arg){
+
+            var data = JSON.stringify({
+               "data" : arg,
+              });
+   
+            const config = { 
+               method: 'post',
+               url: '/exams/participants',
+               headers: { 
+                  'Content-Type': 'application/json'
+               },
+               data: data
+            }; 
+            
+            const result: any = await axios(config).then(function (response) {
+               return {
+                  data: response.data,
+                  success: true
+               }
+            }).catch(function (error) {
+               console.log(error);
+   
+               return {
+                  success: false
+               }
+            });
+            let   myapplications = result.data
+                  console.log("my applications")
+                  console.log(myapplications.postingApplications)
+                  this.applicationsList = myapplications.postingApplications
+                  
+            return result;
+         },
          async getTime(arg){
 
             var data = JSON.stringify({

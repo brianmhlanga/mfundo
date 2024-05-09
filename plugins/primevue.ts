@@ -17,6 +17,7 @@ import OrderList from 'primevue/orderlist';
 import ToggleButton from 'primevue/togglebutton';
 import MultiSelect from 'primevue/multiselect';
 import Skeleton from 'primevue/skeleton';
+import Quill from "quill";
 import TabView from 'primevue/tabview';
 import TabPanel from 'primevue/tabpanel';
 import RadioButton from 'primevue/radiobutton';
@@ -53,7 +54,6 @@ import PanelMenu from 'primevue/panelmenu';
 import Chart from 'primevue/chart';
 import Password from 'primevue/password';
 import Avatar from 'primevue/avatar';
-import Quill from 'quill'
 import AvatarGroup from 'primevue/avatargroup';
 import Tag from 'primevue/tag';
 import BlockUI from 'primevue/blockui';

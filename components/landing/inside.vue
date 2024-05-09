@@ -21,7 +21,7 @@
                     <NuxtLink to="/">Home</NuxtLink>
                 </li>
                 <li>
-                    <a href="./about.vue">About Us</a>
+                    <a href="/about">About Us</a>
                 </li>
                 <li>
                     <a href="/exams">Quizzes</a>

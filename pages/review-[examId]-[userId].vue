@@ -3,7 +3,7 @@
         <section class="hero-section banner-overlay bg_img" data-img="/images/studentwithbooks.png">
                 <div class="custom-container">
                     <div class="hero-content">
-                        <h1 class="title uppercase cl-white">Quiz Screen</h1>
+                        <h1 class="title uppercase cl-white">Review</h1>
                     </div>
                 </div>
         </section>
@@ -16,9 +16,6 @@
                     <div class="row">
                         <div class="col-lg-4">
                             <div class="course-video-area mb-lg-0">
-                                <div class="top-counter">
-                                    {{ hours }}h {{ minutes }}m {{ seconds }}s
-                                </div>
                                 <div class="course-video-content">
                                     <h6 class="title">{{ exam?.exam_name }}</h6>
                                     <ul class="course-infos">
@@ -31,11 +28,8 @@
                                         <li>
                                             <span><i class="fas fa-puzzle-piece"></i>Current Question</span><span>{{ current_question }} of {{ exam?.questions.length }}</span>
                                         </li>
-                                        <li>
-                                            <span><i class="fas fa-certificate"></i>Time Left</span><span>{{ hours }}h {{ minutes }}m {{ seconds }}s</span>
-                                        </li>
                                     </ul>
-                                    <a @click="submitSolutions()" class="custom-button theme-one rounded">Submit Solutions <i class="fas fa-angle-right"></i></a>
+                                    <a  class="custom-button theme-one rounded">Retake Exam<i class="fas fa-angle-right"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -51,6 +45,7 @@
                                         <div class="tab-pane show fade active" id="overview">
                                             <div class="overview">
                                                 <Panel v-show="index+1 === current_question" class="panelMargin mb-5" v-for="(question, index) in (exam?.questions)" :key="question.id" :header="`Question ${index+1}`">
+                                                    <small>Please note <span class="bg-green">Green</span> indicates correct solution and <span class="bg-red">Red</span> your incorrect solution</small>
                                                 <fieldset class="p-fieldset p-component" data-v-f31ebf78="">
                                                     <div id="pv_id_646_content" class="p-toggleable-content" role="region" aria-labelledby="pv_id_646_header">
                                                     <div class="p-fieldset-content">
@@ -60,20 +55,25 @@
                                                     </div>
                                                     </div>
                                                 </fieldset>
+                                               
                                                 <fieldset v-if="question.question_type === 'MultiChoice'" class="p-fieldset p-component" data-v-f31ebf78="">
                                                     <div id="pv_id_646_content" class="p-toggleable-content" role="region" aria-labelledby="pv_id_646_header">
                                                         <div class="p-fieldset-content">
-                                                        <div v-for="option in question.options" :key="option.id" class="field-radiobutton">
-                                                            <RadioButton v-model="question.student_multichoice_answer" @change="compareMultichoice(index)" inputId="city1" name="city" :value="option"  />
-                                                            <label for="city1">{{option}}</label>
+                                                            <div class="flex flex-wrap align-items-center">
+                                                        <div v-for="(answer, Answerindex) in question?.options" 
+                                                        class="ml-0 md:ml-2 mt-2 md:mt-0 border-1 p-1 px-2 border-round flex align-items-center font-medium surface-100 text-600 surface-border"
+                                                        :class="{ 'bg-color': answer === exam?.questions[index].multichoice_answer,'bg-red': answer === exam?.solutions[index].student_multichoice_answer 
+            && answer !== exam?.questions[index].multichoice_answer  }" >
+                                                            <i class="mr-2">{{ String.fromCharCode(65 + Answerindex) }}</i>
+                                                            <span>{{ answer }}</span>
                                                         </div>
+                                                    </div>   
                                                     </div>
                                                     </div>
                                                 </fieldset>
                                                 <div class="details-buttons-area">
                                                     <a v-if="index > 0" @click="goToPrevious()" class="custom-button theme-one"><i class="fas fa-angle-left"></i>Previous Question</a>
                                                     <a v-if="index < exam?.questions.length - 1" @click="goToNext()" class="custom-button theme-one">Next Question <i class="fas fa-angle-right"></i></a>
-                                                    <a @click="submitSolutions()" class="custom-button theme-one solutions">Submit Solutions <i class="pi pi-file"></i></a>
                                                 </div>
                                                 </Panel>
                                             </div>
@@ -84,43 +84,7 @@
                         </div>
                     </div>
                 </div>
-            </section>
-            <Dialog v-model:visible="alreadyModal" @hide="navigateTo('/')" modal header="Results" :style="{ width: '50vw' }" :breakpoints="{ '1199px': '75vw', '575px': '90vw' }">
-                <main>
-                <div class="card col-12">
-                    <div class="card-left">
-                        <h4>Your Have Already Taken this Exam</h4>
-                        
-                      <Button @click="goToReview()" label="Solutions Review" />
-                    </div>
-                </div>
-                </main>
-            </Dialog>
-            <Dialog v-model:visible="resultModal" @hide="navigateTo('/')" modal header="Results" :style="{ width: '50vw' }" :breakpoints="{ '1199px': '75vw', '575px': '90vw' }">
-                <main>
-                <div class="card col-12">
-                    <div class="card-left">
-                        <h4>Your Result</h4>
-                        <div class="score">
-                            <h1 class="scoreline">{{ pass_percentage }}<sup>%</sup></h1>
-                        </div>
-                        <div class="score-content">
-                            <h2 v-if="pass_percentage < 10">Poor!</h2>
-                            <h2 v-if="pass_percentage >= 10 && pass_percentage < 20">Worker Harder, You will be there!</h2>
-                            <h2 v-if="pass_percentage >= 20 && pass_percentage < 30">Try again!</h2>
-                            <h2 v-if="pass_percentage >= 30 && pass_percentage < 40">Almost There!</h2>
-                            <h2 v-if="pass_percentage >= 40 && pass_percentage < 50">Not Bad!</h2>
-                            <h2 v-if="pass_percentage >= 50 && pass_percentage < 60">Good!</h2>
-                            <h2 v-if="pass_percentage >= 60 && pass_percentage < 70">Really Good!</h2>
-                            <h2 v-if="pass_percentage >= 70 && pass_percentage < 80">Well Done!</h2>
-                            <h2 v-if="pass_percentage >= 80">Excellent!</h2>
-                            <p>You scored higher than 65% of the people who have taken these tests.</p>
-                        </div>
-                      <Button @click="goToReview()" label="Solutions Review" />
-                    </div>
-                </div>
-                </main>
-            </Dialog>
+            </section>   
     </NuxtLayout>
     </template>
     <script lang="ts" setup>
@@ -128,10 +92,9 @@
     import { useRecruitmentStore } from '~/stores/recruitment';
     import { useToast } from 'primevue/usetoast';
     import Swal from 'sweetalert2';
+import { SubTitle } from 'chart.js';
     const { params: { examId, userId } } = useRoute();
     const exam = ref()
-    const resultModal = ref(false)
-    const alreadyModal = ref(false)
     const questions = ref()
     const is_exam_over = ref(false)
     const hours = ref()
@@ -159,9 +122,6 @@
         let b = a - 1
         current_question.value = b
         return
-    }
-    const goToReview = () => {
-        navigateTo(`/review-${examId}-${userId}`)
     }
     //working old function
     // let startCountdown = async (hrs, mins, secs) => {
@@ -199,101 +159,11 @@
             
     //     }, 1000);
     // }
-    let startCountdown = async (hrs, mins, secs) => {
-    hours.value = hrs;
-    minutes.value = mins;
-    seconds.value = secs;
-    totalSeconds.value = hrs * 3600 + mins * 60 + secs;
 
-    let intervalId = setInterval(async () => {
-        totalSeconds.value--;
-        if (totalSeconds.value <= 0 ) {
-            clearInterval(intervalId);
-            console.log("exam over");
-            if (totalSeconds.value <= 0) {
-                await submitOnTimeOut();
-            }
-            return;
-        }
-        if (is_exam_over.value) {
-            clearInterval(intervalId);
-            let data = {
-                exam_id: examId,
-                student_id: userId
-            }
-            let deleteTime = await examsStore.deleteTime(data)
-
-        }
-
-        hours.value = Math.floor(totalSeconds.value / 3600);
-        minutes.value = Math.floor((totalSeconds.value % 3600) / 60);
-        seconds.value = totalSeconds.value % 60;
-
-        // Save time left to localStorage
-        let data = {
-            hours: hours.value,
-            minutes: minutes.value,
-            seconds: seconds.value,
-            exam_id: examId,
-            student_id: userId
-        };
-
-        if (!is_exam_over.value) {
-            let savedTime = await examsStore.storeTime(data);
-        } else {
-            let savedTime = await examsStore.deleteTime(data);
-        }
-    }, 1000);
-};
 
 
     
-    const submitSolutions =  async () => {
-                let data = {
-                    questionList: await addStudentId(exam?.value?.questions)
-                }
-                let result =  await examsStore.saveAnswers(data).then((data) => {
-                    total_questions.value = data?.data?.total
-                    correct_questions.value = data?.data?.correct
-                    pass_percentage.value = (((correct_questions.value/total_questions.value)*100).toFixed(2))
-                    resultModal.value = true
-                    if(data?.data?.success){
-                        is_exam_over.value = true
-                        toast.add({severity: 'success', summary: 'Success', detail: 'Exam Succesfully Completed', life: 3000});
-                        
-                    }else{
-                       Swal.fire({
-                        title: 'Error!',
-                        text: data?.data?.message,
-                        icon: 'error',
-                        confirmButtonText: 'Try Again'
-                        })
-                    }
-                })
-                
-    };
-    const submitOnTimeOut =  async () => {
-                let data = {
-                    questionList: await addStudentId(exam?.value?.questions)
-                }
-                let result =  await examsStore.saveAnswers(data).then((data) => {
-                    total_questions.value = data?.data?.total
-                    correct_questions.value = data?.data?.correct
-                    pass_percentage.value = (((correct_questions.value/total_questions.value)*100).toFixed(2))
-                    resultModal.value = true
-                    if(data?.data?.success){
-                        toast.add({severity: 'success', summary: 'Success', detail: 'Exam Succesfully Completed', life: 3000});
-                    }else{
-                       Swal.fire({
-                        title: 'Error!',
-                        text: data?.data?.message,
-                        icon: 'error',
-                        confirmButtonText: 'Try Again'
-                        })
-                    }
-                })
-                
-    };
+   
     const  addStudentId = (objects) => {
       return objects.map(obj => {
         obj.student_id = userId;
@@ -306,30 +176,13 @@
             id: examId,
             student_id: userId
         }
-        let examm = await examsStore.takeExam(data).then(async(result) => {
-            console.log(result?.data?.exam?.solutions)
-            let sols =  result?.data?.exam?.solutions
-            if(sols.length > 0) {
-                alreadyModal.value = true
-            }
+        let examm = await examsStore.reviewExam(data).then(async(result) => {
             exam.value = result?.data?.exam
             // Retrieve saved exams and time from Database
             let data = {
                 exam_id: examId,
                 student_id: userId
             }
-            let saved_time = await examsStore.getTime(data).then((result) => {
-                
-                if(result?.data?.time === null) {
-                    // assign time from exam time
-                    startCountdown(exam.value?.exam_hours, exam.value?.exam_minutes, 0);
-    
-                } else {
-                    // assign time from the saved time if user has saved time
-                    startCountdown(result?.data?.time?.hours, result?.data?.time?.minutes,result?.data?.time?.seconds)
-                }
-            })
-            
         })
     })
     
@@ -394,6 +247,27 @@
         margin: auto;
         padding: 45px;
     }
+    .bg-color {
+    background-color: #2eca7f !important;
+    color: white !important;
+    
+}
+span.bg-green {
+    background-color: #2eca7f;
+    padding: 2px;
+    border-radius: 3px;
+    color: white;
+}
+span.bg-red {
+    background-color: red;
+    padding: 2px;
+    border-radius: 3px;
+    color: white;
+}
+.bg-red {
+    background-color: red !important;
+    color: white !important;
+}
     .card {
     position: relative;
     display: flex;

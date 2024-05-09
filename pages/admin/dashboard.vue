@@ -8,7 +8,7 @@
         <div>
           <span class="text-700">Students</span>
         </div>
-        <div class="p-2 bg-indigo-50 text-indigo-500 border-round ml-auto">23</div>
+        <div class="p-2 bg-indigo-50 text-indigo-500 border-round ml-auto">{{ students }}</div>
       </div>
       <img src="/images/students.svg" class="w-11 topart">
     </div>
@@ -21,7 +21,7 @@
           <span class="text-700">Exams</span>
           
         </div>
-        <div class="p-2 bg-indigo-50 text-indigo-500 border-round ml-auto">25</div>
+        <div class="p-2 bg-indigo-50 text-indigo-500 border-round ml-auto">{{ exams }}</div>
       </div>
       <img src="/images/exams.svg" class="w-11 topart2">
     </div>
@@ -33,7 +33,7 @@
         <div>
           <span class="text-700">Subjects</span>
         </div>
-        <div class="p-2 bg-indigo-50 text-indigo-500 border-round ml-auto">59</div>
+        <div class="p-2 bg-indigo-50 text-indigo-500 border-round ml-auto">{{ subjects }}</div>
       </div>
       <img src="/images/subjects.svg" class="w-11 topart3">
     </div>
@@ -43,9 +43,9 @@
       <div class="p-3 flex align-items-start">
         <img src="/images/new.png" class="mr-2" style="width: 32px; height: 32px;">
         <div>
-          <span class="text-700">New Registrations</span>
+          <span class="text-700">Total Questions</span>
         </div>
-        <div class="p-2 bg-indigo-50 text-indigo-500 border-round ml-auto">233</div>
+        <div class="p-2 bg-indigo-50 text-indigo-500 border-round ml-auto">{{ questions }}</div>
       </div>
       <img src="/images/new.svg" class="w-11 topart4">
     </div>
@@ -60,23 +60,32 @@
     import {useAdminStore} from "~/stores/admin"
     import { useAuthStore } from '@/stores/auth';
     import moment from "moment";
+    import { useManagementStore } from "~/stores/management";
     const adminStore =  useAdminStore()
+    const managementStore = useManagementStore()
     const authStore = useAuthStore();
     const applicants = ref()
-    const current_openings = ref()
-    const closed_openings = ref()
-    const total_openings = ref()
-    const rejected_applications = ref()
-    const successful_applications = ref()
-    // definePageMeta({ 
-    //     middleware: ["auth"]
-    // });
-
+    definePageMeta({
+            middleware: "auth"
+    });
+    const students = ref()
+    const exams = ref()
+    const questions = ref()
+    const subjects = ref()
     const formatCurrency = (value) => {
 
     return value.toLocaleString('en-US', { style: 'currency', currency: 'ZWL' });
 
     };
+    onMounted( async() => {
+      let stats = await managementStore.getStats().then((data) => {
+        console.log("data",data)
+        students.value = data?.data.students
+        exams.value = data?.data.exams
+        questions.value = data?.data.questions
+        subjects.value = data?.data.subjects
+      })
+    })
 
 
   

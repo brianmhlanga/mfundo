@@ -53,12 +53,6 @@
                 </div>
                 </div>
                 <div class="flex justify-content-between pt-4">
-                <button class="p-button p-component p-button-outlined p-button-secondary w-6 mr-2" type="button" aria-label="View" data-pc-name="button" data-pc-section="root" data-pd-ripple="true">
-                    <span class="p-button-icon p-button-icon-left pi pi-eye" data-pc-section="icon"></span>
-                    <span class="p-button-label" data-pc-section="label">History</span>
-                    <!---->
-                    <span role="presentation" aria-hidden="true" data-p-ink="true" data-p-ink-active="false" class="p-ink" data-pc-name="ripple" data-pc-section="root"></span>
-                </button>
                 <button @click="checkSignedIn(exam?.id)" class="p-button p-component p-button-outlined p-button-secondary w-6 ml-2" type="button" aria-label="Follow" data-pc-name="button" data-pc-section="root" data-pd-ripple="true">
                     <span class="p-button-icon p-button-icon-left pi pi-pencil" data-pc-section="icon"></span>
                     <span class="p-button-label" data-pc-section="label">Exam</span>
