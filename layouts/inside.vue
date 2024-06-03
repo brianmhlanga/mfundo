@@ -21,7 +21,7 @@
     
         <!-- ========== section start ========== -->
         <body>
-          <div class="all-sections">
+          <div class="all-sections" :class="{ 'loading': loading }">
             <LandingInside/>
             <slot/>
             <landing-footer/>
@@ -32,8 +32,17 @@
         <!-- ========== footer start =========== -->
 
 </template>
+<script setup>
+const loading = ref(true);
 
+onMounted(() => {
+    setTimeout(() => {
+        loading.value = false;
+    }, 1000);
+});
+</script>
 <script>
+
 
 export default defineNuxtComponent ( { 
     head(){
@@ -100,5 +109,32 @@ body {
   overflow-x: clip !important;
   font-family: Poppins, sans-serif;
   background: #edf2f9;
+}
+.all-sections {
+    position: relative; /* Required for positioning the spinner */
+    transition: opacity 0.3s ease-in-out;
+}
+
+.loading {
+    opacity: 0;
+    pointer-events: none; /* Prevent interaction during loading */
+}
+
+.spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-top: 4px solid #fff;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 </style>

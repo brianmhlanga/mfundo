@@ -113,6 +113,7 @@ const toast = useToast()
 const exams = ref()
 let examsStore = useExamsStore()
 let authStore = useAuthStore()
+const loader = ref(true);
 const id = ref()
 //@ts-ignore
 const last_name = ref()
@@ -132,6 +133,9 @@ onMounted( async() => {
     let result = await examsStore.getExams().then((data) => {
       exams.value = data?.data?.exams
     })
+    setTimeout(() => {
+        loader.value = false; // Set loading to false after 2 seconds
+    }, 2000);
 })
 const checkSignedIn = (examId) => {
   if(id.value) {
@@ -152,6 +156,14 @@ ul.menu.d-none.d-lg-flex.flex-wrap {
 .header-area .logo img {
     max-width: 75%;
     margin-left: 50px;
+}
+.fade-in {
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.fade-in.active {
+    opacity: 1;
 }
 a.custom-button {
     color: #ffffff;
@@ -280,4 +292,27 @@ a.custom-button.btn-md.theme-one:hover {
     text-transform: capitalize !important;
     position: relative !important;
 }
+.loader {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-left-color: #333;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
 </style>

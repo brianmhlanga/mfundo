@@ -5,14 +5,7 @@ dotenv.config();
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
     app: {
-        pageTransition: {
-          name: 'fade',
-          mode: 'out-in' // default
-        },
-        layoutTransition: {
-          name: 'slide',
-          mode: 'out-in' // default
-        }
+        layoutTransition: { name: 'layout', mode: 'out-in' }
       },
     typescript: {
         strict: false
