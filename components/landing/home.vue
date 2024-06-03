@@ -24,7 +24,7 @@
                     <a href="/about">About Us</a>
                 </li>
                 <li>
-                    <a href="/exams">Quizzes</a>
+                    <a href="/exams">Exams</a>
                 </li>
                 <li>
                     <a href="contact.html">Contact</a>
