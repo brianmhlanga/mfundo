@@ -38,7 +38,7 @@ const loading = ref(true);
 onMounted(() => {
     setTimeout(() => {
         loading.value = false;
-    }, 200);
+    }, 2000);
 });
 </script>
 <script>

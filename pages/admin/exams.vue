@@ -131,6 +131,7 @@ onMounted (async () => {
     exams.value = data?.data?.exams
    })
 })
+
 const editSubject = (id,name,descriptionn,statuss) => {
    console.log("dddddddddddddddd",description)
    editSubjectModal.value = true
