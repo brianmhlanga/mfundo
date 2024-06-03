@@ -15,13 +15,25 @@
     
         <!-- ========== section start ========== -->
         <body>
-          <slot/>
+          <div :class="{ 'loading': loading }">
+              
+              <slot/>
+              
+            </div>
         </body>
 
         <!-- ========== footer start =========== -->
 
 </template>
+<script setup>
+const loading = ref(true);
 
+onMounted(() => {
+    setTimeout(() => {
+        loading.value = false;
+    }, 200);
+});
+</script>
 <script>
 
 export default defineNuxtComponent ( { 
@@ -64,4 +76,17 @@ export default defineNuxtComponent ( {
 body {
     background-color: #ffffff !important;
 }
+
+  
+  .loading {
+      opacity: 0;
+      pointer-events: none; /* Prevent interaction during loading */
+  }
+  
+  
+  
+  @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+  }
 </style>
