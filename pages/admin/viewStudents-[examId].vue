@@ -90,7 +90,7 @@
                        </div>
                        <div class="w-full">
                            <label for="expiration" class="block mb-1 text-color text-base">Status</label>
-                           <DropDown v-model="selected_status" :options="statuses" />
+                           <Dropdown v-model="selected_status" :options="statuses" />
                        </div>
                        </div>
                    </form>

@@ -42,7 +42,7 @@
                                     <Calendar v-model="date_of_birth" class="w-12" placeholder="Date of Birth"/>
                                 </div>
                                 <div class="col-12 col-sm-6">
-                                    <DropDown v-model="selectedCountry" :options="countries" filter optionLabel="name" placeholder="Select a Country" class="w-12 mydropdown">
+                                    <Dropdown v-model="selectedCountry" :options="countries" filter optionLabel="name" placeholder="Select a Country" class="w-12 mydropdown">
                                     <template #value="slotProps">
                                         <div v-if="slotProps.value" class="flex align-items-center">
                                             <img :alt="slotProps.value.label" src="https://primefaces.org/cdn/primevue/images/flag/flag_placeholder.png" :class="`mr-2 flag flag-${slotProps.value.code.toLowerCase()}`" style="width: 18px" />
@@ -62,16 +62,13 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-12 col-sm-6">
-                                    <input v-model="school" type="text" class="form-control" placeholder="School/Institution">
-                                </div>
-                                <div class="col-12 col-sm-6">
-                                    <input v-model="grade" type="text" class="form-control" placeholder="Grade">
+                                <div class="col-12">
+                                    <input v-model="email" type="email" class="form-control" placeholder="Email Address" required>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-12">
-                                    <input v-model="email" type="email" class="form-control" placeholder="Email Address" required>
+                                <div class="col-12 col-sm-12">
+                                    <MultiSelect v-model="selectedAreas" optionLabel="name" optionValue="id" :options="subjects" placeholder="Select Areas of Interest" :maxSelectedLabels="5" class="w-12" />
                                 </div>
                             </div>
                             <div class="row">
@@ -102,10 +99,8 @@
                                 </div>
                             </div>
                             <div class="row top-padding">
-                                <div class="col-12 col-sm-6">
-                                    <div class="form-button">
-                                        <Button @click="signUp" :disabled="!first_name || !last_name || !date_of_birth || !selectedCountry || !school || !grade || !email || !phone || !password || !confirm_password || cell_validation?.isValid === false" class="ibtn less-padding">Sign Up</Button>
-                                    </div>
+                                <div class="col-12 col-sm-12">
+                                        <Button @click="signUp" :disabled="!first_name || !last_name || !date_of_birth || !selectedCountry || !selectedAreas || !email || !phone || !password || !confirm_password || cell_validation?.isValid === false" class="w-6 signupbtn">Sign Up</Button>
                                 </div>
                             </div>
                         </form>
@@ -120,24 +115,32 @@
 import MazPhoneNumberInput from 'maz-ui/components/MazPhoneNumberInput'
 import { useToast } from "primevue/usetoast";
 import { useAuthStore } from "~/stores/auth";
+import { useManagementStore } from "~/stores/management";
 const authStore = useAuthStore()
 const toast = useToast()
+const managementStore = useManagementStore()
 import countriesData from '~/json/countries.json';
 const selectedCountry = ref();
 const countryCode = ref();
+const selectedAreas = ref()
 const cell_validation = ref()
 const first_name = ref()
 const last_name = ref()
 const date_of_birth = ref()
 const school = ref()
+const subjects = ref()
 const grade = ref()
 const email = ref()
 const phone = ref()
 const password = ref()
 const confirm_password = ref()
 const countries = ref([]);
-onMounted(() => {
+onMounted( async() => {
   countries.value = countriesData;
+  let subjectss = await managementStore.listSubjects().then((result) => {
+            console.log(result)
+            subjects.value = result?.data?.subjects
+  })
 });
 
 const signUp = async () => {
@@ -149,6 +152,7 @@ const signUp = async () => {
        school: school.value,
        grade: grade.value,
        email: email.value,
+       interests: selectedAreas.value,
        phone: phone.value,
        password: password.value,
        confirm_password: confirm_password
@@ -192,6 +196,32 @@ img.logo-size {
 }
 .form-content {
     background-color: white !important;
+}
+.m-phone-number-input:not(.--no-flags) .m-phone-number-input__select .m-select-input input {
+    background-color: #673AB7 !important;
+    padding-left: 2.25rem !important;
+    color: white !important;
+}
+.m-input.--should-up .m-input-label {
+    color: white !important;
+    transform: scale(.8) translateY(-.65em);
+}
+.p-checkbox .p-checkbox-box {
+    border: 2px solid #ced4da;
+    /* background: #ffffff00; */
+    width: 22px;
+    height: 22px;
+    color: #495057;
+    border-radius: 6px;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+.m-phone-number-input__country-flag.--should-have-bottom-flag {
+    bottom: 2px;
+    color: white;
+}
+.m-input-wrapper.--default-border {
+    --tw-border-opacity: 0 !important;
+    border-color: rgb(229 231 235 / var(--tw-border-opacity));
 }
 .p-dropdown {
     background: #ffffff;

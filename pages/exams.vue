@@ -4,13 +4,13 @@
             
             <div class="custom-container">
                 <div class="hero-content">
-                    <h1 class="title uppercase cl-white">Quizzes</h1>
+                    <h1 class="title uppercase cl-white">Exams</h1>
                     <ul class="breadcrumb cl-white p-0 m-0">
                         <li>
                             <a href="/">Home</a>
                         </li>
                         <li>
-                            quizzes
+                            exams
                         </li>
                     </ul>
                 </div>
@@ -26,36 +26,12 @@
                     <div class="col-lg-7">
                         <div class="section-header left-style mb-low mb-lg-0">
                             <span class="category">TOP SELECTIONS</span>
-                            <h2 class="title">Online Quizzes</h2>
+                            <h2 class="title">Online Exams</h2>
                         </div>
                     </div>
                     <div class="col-lg-5">
-                        <div class="d-flex flex-wrap justify-content-lg-end m--10">
-                            <div class="course-select-item">
-                                <select class="select-bar">
-                                    <option value="c1">Photoshop</option>
-                                    <option value="c2">Webdesign</option>
-                                    <option value="c3">English</option>
-                                    <option value="c4">History</option>
-                                    <option value="c5">Wordpress</option>
-                                    <option value="c6">Laravel</option>
-                                    <option value="c7">Python</option>
-                                    <option value="c8">Javascript</option>
-                                </select>
-                            </div>
-                            <div class="course-select-item">
-                                <select class="select-bar">
-                                    <option value="o1">Select Order</option>
-                                    <option value="o2">Webdesign</option>
-                                    <option value="o3">English</option>
-                                    <option value="o4">History</option>
-                                    <option value="o5">Wordpress</option>
-                                    <option value="o6">Laravel</option>
-                                    <option value="o7">Python</option>
-                                    <option value="o8">Javascript</option>
-                                </select>
-                            </div>
-                        </div>
+                        <MultiSelect @change="getFiltered()" v-model="selectedInterests" :options="interests" filter optionLabel="name" optionValue="id" placeholder="Select Intrests"
+            :maxSelectedLabels="3" class="w-full md:w-20rem" />
                     </div>
                 </div>
                 <div class="row justify-content-center mb-30-none">
@@ -97,9 +73,7 @@
                     </div>
                     
                 </div>
-                <div class="text-center load-more mt-5">
-                    <a href="./courses.html" class="custom-button theme-one">load more courses <i class="fas fa-angle-right"></i></a>
-                </div>
+                <Paginator  @page="getFiltered()" v-model:first="first" v :rows="items_per_page" :totalRecords="number_of_records ? number_of_records : 0"></Paginator>
             </div>
         </section>
     </NuxtLayout>
@@ -108,18 +82,36 @@
 import { useToast } from 'primevue/usetoast';
 import { useAuthStore } from '~/stores/auth';
 import { useExamsStore } from '~/stores/exams';
+import { useManagementStore } from '~/stores/management';
 const toast = useToast()
 const exams = ref()
 let examsStore = useExamsStore()
+let managementStore = useManagementStore()
 let authStore = useAuthStore()
 const id = ref()
+let number_of_records = ref()
+const first = ref(0)
+const items_per_page = ref(6)
 //@ts-ignore
 const last_name = ref()
 const first_name = ref()
 const profile = ref()
+const selectedInterests = ref()
+const interests = ref()
 
 const logOut = () => {
     let result = authStore.logout()
+}
+const getFiltered = async () => {
+    let data = {
+        interests: selectedInterests.value,
+        first: first.value,
+        last: items_per_page.value
+    }
+    let result = await examsStore.getFiltredExams(data).then((data) => {
+      exams.value = data?.data?.exams
+      number_of_records.value = data?.data?.total
+    })
 }
 // const { value: { id }} = useCookie('user');
 onMounted( async() => {
@@ -127,10 +119,21 @@ onMounted( async() => {
     id.value = userData?.id
     first_name.value = userData?.first_name
     last_name.value = userData?.last_name
+    selectedInterests.value  = userData?.interests
     profile.value = userData?.profile
-    let result = await examsStore.getExams().then((data) => {
+    let data = {
+        interests: selectedInterests.value,
+        first: first.value,
+        last: items_per_page.value
+    }
+    let result = await examsStore.getFiltredExams(data).then((data) => {
       exams.value = data?.data?.exams
+      number_of_records.value = data?.data?.total
     })
+    let subjectss = await managementStore.listSubjects().then((result) => {
+            console.log(result)
+            interests.value = result?.data?.subjects
+  })
 })
 const checkSignedIn = (examId) => {
   if(id.value) {

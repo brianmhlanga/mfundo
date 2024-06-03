@@ -3,7 +3,7 @@
     <section class="hero-section banner-overlay bg_img" data-img="/images/studentwithbooks.png">
             <div class="custom-container">
                 <div class="hero-content">
-                    <h1 class="title uppercase cl-white">Quiz Screen</h1>
+                    <h1 class="title uppercase cl-white">EXAM SCREEN</h1>
                 </div>
             </div>
     </section>

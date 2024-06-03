@@ -4,7 +4,7 @@ import argon2 from "argon2";
 
 export default defineEventHandler(async (event)=>{
     const response:any = {};
-    const { data: {first_name,last_name,date_of_birth,country,school,grade,email,phone,password}} = await readBody(event);
+    const { data: {first_name,last_name,date_of_birth,interests,country,school,grade,email,phone,password}} = await readBody(event);
      
     const isAlreadyRegistered = await prisma.student.findUnique({
         where: {
@@ -34,6 +34,7 @@ export default defineEventHandler(async (event)=>{
                 school,
                 grade,
                 email,
+                interests: interests,
                 nationality: country,
                 phone,
                 profile: "STUDENT",

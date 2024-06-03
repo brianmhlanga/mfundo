@@ -4,6 +4,16 @@ import * as dotenv from 'dotenv'
 dotenv.config();
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
+    app: {
+        pageTransition: {
+          name: 'fade',
+          mode: 'out-in' // default
+        },
+        layoutTransition: {
+          name: 'slide',
+          mode: 'out-in' // default
+        }
+      },
     typescript: {
         strict: false
     },
@@ -18,6 +28,7 @@ export default defineNuxtConfig({
     modules:
      ["formidable",
      '@pinia/nuxt',
+     'nuxt-primevue',
      'nuxt-scheduler',
     ],
     pinia: {

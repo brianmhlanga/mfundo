@@ -9,8 +9,8 @@ generator erd {
 
 datasource db {
   provider = "mysql"
-  // url      = env("DATABASE_URL")
-  url      = "mysql://mfundo:bm19962099@localhost:3306/mfundo?schema=public"
+  url      = env("DATABASE_URL")
+  // url      = "mysql://mfundo:bm19962099@localhost:3306/mfundo?schema=public"
 }
 model User {
   id                String         @id @default(cuid())
@@ -59,6 +59,7 @@ model Student {
   phone                  String?
   nationality            Json?            
   date_of_birth          DateTime?
+  interests Json?
   school                 String?
   grade                  String?
   profile                profile_type @default(STUDENT)
@@ -114,7 +115,7 @@ model Questions {
   created_by_id               Int?
   boolean_answer              Boolean?
   multichoice_answer          String? 
-  question                    String      @db.VarChar(10000)
+  question                    String      @db.LongText
   student_boolean_answer      Boolean?
   student_multichoice_answer  String?
   student_unstructured_answer String?

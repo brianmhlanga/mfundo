@@ -142,7 +142,7 @@
 <section class="banner-section banner-overlay bg_img" data-img="./assets/images/banner/banner-bg.jpg">
     <div class="container">
         <div class="banner-content cl-white">
-            <h1 class="titlee">Powerful Online Quiz and Exams Solution</h1>
+            <h1 class="titlee">Powerful Online Tests & Examinations</h1>
             <p class=minidescription>Create, send and analyze your tests, quizzes and assessments for free with Mfundo</p>
             <div class="banner-button-area">
                 <NuxtLink to="#courses" class="custom-button btn-md"><span>View courses</span><i class="fas fa-play-circle"></i></NuxtLink>

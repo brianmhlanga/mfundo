@@ -22,7 +22,7 @@
                     </div>
                     <div class="field mb-4 col-12">
                     <label for="nickname2" class="font-medium text-900">Subject</label>
-                        <DropDown v-model="selectedSubject"  optionLabel="name" optionValue="id" :options="subjects" placeholder="Select Subject" class="w-full md:w-14rem" />
+                        <Dropdown v-model="selectedSubject"  optionLabel="name" optionValue="id" :options="subjects" placeholder="Select Subject" class="w-full md:w-14rem" />
                     </div>
                     <div class="mb-4 col-3">
                         <Button @click="createQuestionModal = true" :disabled="!exam_name || !selectedSubject || !hours&&!minutes" class="mb-5" label="Create Question" icon="pi pi-plus" />
@@ -67,7 +67,13 @@
         <div class="grid formgrid p-fluid">
                     <div class="field mb-4 col-12">
                     <label for="nickname2" class="font-medium text-900">Question</label>
-                    <Editor v-model="question"/>
+                    <Editor
+                        id="editor"
+                        ref="editor"
+                        v-model="question"
+                        editorStyle="height: 320px"
+                        >
+                    </Editor>
                     </div>
                     <div class="surface-border border-top-1 opacity-50 mb-3 col-12"></div>
                     <div v-if="question_type === 'MultiChoice'" class="field mb-4 col-12 md:col-12">
@@ -82,7 +88,7 @@
                     </div>
                     <div v-if="question_type === 'MultiChoice'" class="field mb-4 col-12 md:col-12">
                     <label for="state2" class="font-medium text-900">Required Answer</label>
-                    <ListBox v-model="multichoice_answer" :options="multichoice_options" optionLabel=""  style="width:100%" />
+                    <Listbox v-model="multichoice_answer" :options="multichoice_options" optionLabel=""  style="width:100%" />
                     </div>
                     
                     <div v-if="question_type === 'Yes/No'" class="field mb-4 col-12">
@@ -106,7 +112,8 @@
 <script setup lang="ts">
     import {useRecruitmentStore} from "~/stores/recruitment"
     import { storeToRefs } from "pinia";
-    import Quill from "quill";
+    import Editor from 'primevue/editor';
+    // import {Quill} from "quill"
     import Swal from 'sweetalert2';
     import { useToast } from 'primevue/usetoast';
     import { useManagementStore } from "~/stores/management";
@@ -195,6 +202,7 @@
             subjects.value = result?.data?.subjects
         })
     });
+
     const deleteQuestion = (index) => {
         questions.value.splice(index,1)
         toast.add({ severity: 'success', summary: 'Success', detail: 'Question succesfully removed', life: 3000})

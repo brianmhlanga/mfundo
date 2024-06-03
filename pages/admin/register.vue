@@ -63,7 +63,7 @@
                             </div>
                             <div class="field mb-4 col-12 md:col-6"> 
                                 <label for="title" class="font-medium text-900">Title</label> 
-                                <DropDown v-model="title" :options="title_options"   placeholder="Select  Title"  /> 
+                                <Dropdown v-model="title" :options="title_options"   placeholder="Select  Title"  /> 
                             </div>
                             <div class="field mb-4 col-12 md:col-6"> 
                                 <label for="age" class="font-medium text-900">Age</label> 
@@ -75,7 +75,7 @@
                             </div>
                             <div class="field mb-4 col-12 md:col-6">
                               <label for="phone" class="font-medium text-900">Gender</label> 
-                              <DropDown v-model="gender" :options="gender1"   placeholder="Select  Gender"  />
+                              <Dropdown v-model="gender" :options="gender1"   placeholder="Select  Gender"  />
                             </div>
                             <div class="field mb-4 col-12 md:col-6"> 
                                 <label for="password" class="font-medium text-900">Password</label> 
@@ -83,11 +83,11 @@
                             </div>
                             <div class="field mb-4 col-12 md:col-6">
                               <label for="phone" class="font-medium text-900">User Type</label> 
-                              <DropDown  v-model="accountTypes" :options="user_type"  placeholder="Select a user type"  />
+                              <Dropdown  v-model="accountTypes" :options="user_type"  placeholder="Select a user type"  />
                             </div>
                             <!-- <div v-if="accountTypes === 'NORMAL'" class="field mb-4 col-12 md:col-6">
                               <label for="phone" class="font-medium text-900">Cost Center</label>
-                              <DropDown @change="selectCommodityCodes(selected_center)"  v-model="selected_center" :options="cost_centers" optionValue="id" optionLabel="center_code"  placeholder="Select Cost Center"  />
+                              <Dropdown @change="selectCommodityCodes(selected_center)"  v-model="selected_center" :options="cost_centers" optionValue="id" optionLabel="center_code"  placeholder="Select Cost Center"  />
                             </div> -->
                             <!-- <div v-if="accountTypes === 'NORMAL'" class="field mb-4 col-12 md:col-6">
                               <label for="phone" class="font-medium text-900">Commodity Access</label> 
