@@ -29,7 +29,7 @@
                                             <span><i class="fas fa-puzzle-piece"></i>Current Question</span><span>{{ current_question }} of {{ exam?.questions.length }}</span>
                                         </li>
                                     </ul>
-                                    <a  class="custom-button theme-one rounded">Retake Exam<i class="fas fa-angle-right"></i></a>
+                                    <a   @click="retakeExam()" class="custom-button theme-one rounded">Retake Exam<i class="fas fa-angle-right"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -169,6 +169,15 @@ import { SubTitle } from 'chart.js';
         obj.student_id = userId;
         return obj;
       });
+    }
+    const retakeExam = async () => {
+        let data = {
+            id: examId,
+            student_id: userId
+        }
+        let examm = await examsStore.retakeExam(data).then(async(result) => {
+            navigateTo(`/takeExam-${examId}-${userId}`)
+        })
     }
     
     onMounted(async () => {
