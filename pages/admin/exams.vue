@@ -60,7 +60,7 @@
                        </div>
                        <div class="w-full">
                            <label for="expiration" class="block mb-1 text-color text-base">Description</label>
-                           <TextArea v-model="description" rows="5" cols="30" />
+                           <Textarea v-model="description" rows="5" cols="30" />
                        </div>
                        </div>
                    </form>
@@ -82,7 +82,7 @@
                        </div>
                        <div class="w-full">
                            <label for="expiration" class="block mb-1 text-color text-base">Description</label>
-                           <TextArea v-model="description" rows="5" cols="30" />
+                           <Textarea v-model="description" rows="5" cols="30" />
                        </div>
                        <div class="w-full">
                            <label for="expiration" class="block mb-1 text-color text-base">Status</label>
