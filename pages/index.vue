@@ -13,7 +13,7 @@
                     <h2 id="courses" class="title">Online Courses</h2>
                 </div>
                 <div class="flex align-items-center justify-content-between mb-5">
-                    <MultiSelect @change="getFiltered()" v-model="selectedInterests" :options="interests" filter optionLabel="name" optionValue="id" placeholder="Select Intrests"
+                    <MultiSelect @change="getFiltered()" v-model="selectedInterests" :options="interests" filter optionLabel="name" optionValue="id" placeholder="Select Interests"
             :maxSelectedLabels="3" class="w-full md:w-20rem" />
                 </div>
                 <div class="row justify-content-center mb-30-none">

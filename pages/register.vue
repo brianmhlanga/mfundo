@@ -142,7 +142,6 @@ onMounted( async() => {
             subjects.value = result?.data?.subjects
   })
 });
-
 const signUp = async () => {
     let data = {
        first_name: first_name.value,
