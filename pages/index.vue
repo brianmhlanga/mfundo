@@ -48,7 +48,7 @@
                                 </div>
                                 
                                 <div class="ratings-area col-12">
-                                    <Button @click="checkSignedIn(exam?.id)" class="custom-button theme-one rounded" label="History"></Button>
+                                    <Button @click="checkHistory(exam?.id)" class="custom-button theme-one rounded" label="History"></Button>
                                     <Button @click="checkSignedIn(exam?.id)" class="custom-button theme-one rounded" label="Take Exam"></Button>
                                 </div>
                             </div>
@@ -117,6 +117,26 @@ onMounted( async() => {
             interests.value = result?.data?.subjects
   })
 })
+const checkHistory = async (examId) => {
+  if(id.value) {
+     let data = {
+            id: examId,
+            student_id: id.value,
+        }
+        let examm = await examsStore.reviewExam(data).then((result) => {
+            console.log("result: ",result?.data?.exam?.solutions)
+            if (result?.data?.exam?.solutions.length > 0) {
+                navigateTo(`history-${examId}-${id.value}`)
+            }
+            else {
+                toast.add({ severity: 'info', summary: 'No History ', detail: 'You have no previous history for this exam',life: 2000});
+            }
+        })
+  }
+  else {
+    toast.add({ severity: 'info', summary: 'Not Authenticated', detail: 'Please login, to check exam',life: 3000});
+  }
+}
 const checkSignedIn = (examId) => {
   if(id.value) {
     navigateTo(`/takeExam-${examId}-${id.value}`)
